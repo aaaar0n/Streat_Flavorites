@@ -4,6 +4,7 @@
 
 {% block content %}
     <h1>{{ item.name }}</h1>
+    <img src="{{ item.photo.url }}" alt="{{ item.name }} Photo" style="max-width: 150px; max-height: 150px;">
     <p>Description: {{ item.description }}</p>
     <p>Price: ${{ item.price }}</p>
     <p>Stocks: {{ item.stocks }}</p>
