@@ -12,7 +12,17 @@
                     <li><a href="{% url 'subcategory_detail' subcategory.id %}">{{ subcategory.name }}</a></li>
                     <ul>
                         {% for item in subcategory.item_set.all %}
-                            <li><a href="{% url 'item_detail' item.id %}">{{ item.name }}</a> - {{ item.description }} - Price: ${{ item.price }} - Stocks: {{ item.stocks }} <a href="{% url 'add_to_cart' item.id %}">Add to Cart</a></li>
+                            <div class="item">
+                                {% if item.photo %}
+                                    <img src="{{ item.photo.url }}" alt="{{ item.name }} Photo" style="max-width: 150px; max-height: 150px;">
+                                {% endif %}
+                                <h2><a href="{% url 'item_detail' item.id %}">{{ item.name }}</a></h2>
+                                <p>Description: {{ item.description }}</p>
+                                <p>Price: ${{ item.price }}</p>
+                                <p>Stocks: {{ item.stocks }}</p>
+                                <p><a href="{% url 'item_detail' item.id %}">Add to Cart</a></p>
+                                <!-- Other item details -->
+                            </div>
                             
                         {% endfor %}
                     </ul>

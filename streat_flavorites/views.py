@@ -26,21 +26,28 @@ def item_detail(request, item_id):
     return render(request, 'item_detail.html', {'item': item})
 
 def cart(request):
-    user_cart, created = Cart.objects.get_or_create(user=request.user)  # Assuming you have authentication
+    user_cart, created = Cart.objects.get_or_create(user=request.user)
     cart_items = user_cart.cartitem_set.all()
-
-    return render(request, 'cart.html', {'cart_items': cart_items})
+    
+    total_items = sum(item.quantity for item in cart_items)
+    
+    return render(request, 'cart.html', {'cart_items': cart_items, 'total_items': total_items})
 
 def add_to_cart(request, item_id):
     item = get_object_or_404(Item, pk=item_id)
     
+    if request.method == 'POST':
+        quantity = int(request.POST.get('quantity', 1))
+    else:
+        quantity = 1
+
     # Get or create the user's cart
     user_cart, created = Cart.objects.get_or_create(user=request.user)  # Assuming you have authentication
     
     # Check if the item is already in the cart, increment quantity if so
     cart_item, created = CartItem.objects.get_or_create(cart=user_cart, item=item)
     if not created:
-        cart_item.quantity += 1
+        cart_item.quantity += quantity
         cart_item.save()
     
     return redirect('cart')  # Redirect to the cart page
