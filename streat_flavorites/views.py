@@ -5,25 +5,33 @@ from django.http import JsonResponse
 
 def index(request):
     categories = Category.objects.all()
-    return render(request, 'index.html', {'categories': categories})
+    context_dict = {'categories': categories}
+
+    return render(request, 'index.html', context_dict)
 
 def category_detail(request, category_id):
     category = get_object_or_404(Category, pk=category_id)
     subcategories = category.subcategory_set.all()
     items = Item.objects.filter(subcategory__category=category)  # Filter items based on the category
+    categories = Category.objects.all()
+    context_dict = {'category': category, 'subcategories': subcategories, 'items': items, 'categories': categories}
 
-    return render(request, 'category_detail.html', {'category': category, 'subcategories': subcategories, 'items': items})
+    return render(request, 'category_detail.html', context_dict)
 
 def subcategory_detail(request, subcategory_id):
     subcategory = get_object_or_404(Subcategory, pk=subcategory_id)
     items = Item.objects.filter(subcategory=subcategory)
+    categories = Category.objects.all()
+    context_dict = {'subcategory': subcategory, 'items': items, 'categories': categories}
 
-    return render(request, 'subcategory_detail.html', {'subcategory': subcategory, 'items': items})
+    return render(request, 'subcategory_detail.html', context_dict)
 
 def item_detail(request, item_id):
     item = get_object_or_404(Item, pk=item_id)
+    categories = Category.objects.all()
+    context_dict = {'item': item, 'categories': categories}
 
-    return render(request, 'item_detail.html', {'item': item})
+    return render(request, 'item_detail.html', context_dict)
 
 def cart(request):
     user_cart, created = Cart.objects.get_or_create(user=request.user)
@@ -33,13 +41,15 @@ def cart(request):
     
     # Calculate total price
     total_price = sum(item.item.price * item.quantity for item in cart_items)
+    categories = Category.objects.all()
+    context_dict = {'cart_items': cart_items, 'total_items': total_items, 'total_price': total_price, 'categories': categories}
     
-    return render(request, 'cart.html', {'cart_items': cart_items, 'total_items': total_items, 'total_price': total_price})
+    return render(request, 'cart.html', context_dict)
 
 
 def add_to_cart(request, item_id):
     item = get_object_or_404(Item, pk=item_id)
-    
+
     if request.method == 'POST':
         quantity = int(request.POST.get('quantity', 1))
     else:
@@ -62,7 +72,10 @@ def remove_from_cart(request, item_id):
     
     return redirect('cart')  # Redirect back to the cart page
 
+
+
 def checkout(request):
+    categories = Category.objects.all()
     if request.method == 'POST':
         # Process the checkout here (e.g., payment processing)
         # Once the checkout is successful, clear the user's cart
@@ -74,8 +87,8 @@ def checkout(request):
         
     user_cart, created = Cart.objects.get_or_create(user=request.user)
     cart_items = user_cart.cartitem_set.all()
-
-    return render(request, 'checkout.html', {'cart_items': cart_items})
+    context_dict = {'cart_items': cart_items, 'categories': categories}
+    return render(request, 'checkout.html', context_dict)
 
 def order_confirmation(request):
     return render(request, 'order_confirmation.html')

@@ -14,11 +14,10 @@
                     {% endif %}
                 </div>
                     <h2><a href="{% url 'item_detail' item.id %}">{{ item.name }}</a></h2>
-                    <p>Description: {{ item.description }}</p>
-                    <p>Price: ${{ item.price }}</p>
-                    <p>Quantity: {{ item.quantity }}</p>
+                    <p>Description: {{ item.item.description }}</p>
+                    <p>Price: ${{ item.item.price }}</p>
                     <li>
-                        {{ item.item.name }} - Quantity: {{ item.quantity }}
+                        Quantity: {{ item.quantity }}
                         <a href="{% url 'remove_from_cart' item.id %}">Remove</a>
                     </li>
                     <!-- Other item details -->

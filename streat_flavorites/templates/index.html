@@ -4,29 +4,32 @@
 
 {% block content %}
     <h1>Welcome to Our Online Store</h1>
-    <ul>
+    <ul class="category-list">
         {% for category in categories %}
             <li><a href="{% url 'category_detail' category.id %}">{{ category.name }}</a></li>
-            <ul>
+            <ul class="subcategory-list">
                 {% for subcategory in category.subcategory_set.all %}
-                    <li><a href="{% url 'subcategory_detail' subcategory.id %}">{{ subcategory.name }}</a></li>
-                    <ul>
-                        {% for item in subcategory.item_set.all %}
-                        <div class="item">
-                            {% if item.photo %}
-                                <img src="{{ item.photo.url }}" alt="{{ item.name }} Photo" style="max-width: 150px; max-height: 150px;">
-                            {% endif %}
-                            <h2><a href="{% url 'item_detail' item.id %}">{{ item.name }}</h2>
-                            <p>Description: {{ item.description }}</p>
-                            <p>Price: ${{ item.price }}</p>
-                            <p>Stocks: {{ item.stocks }} </p>
-                            <!-- Other item details -->
-                        </div>
-                            <a href="{% url 'item_detail' item.id %}">Add to Cart</a></li>              
-                        {% endfor %}
-                    </ul>
+                    <li class="subcategory">
+                        <a href="{% url 'subcategory_detail' subcategory.id %}">{{ subcategory.name }}</a>
+                        <ul class="item-list">
+                            {% for item in subcategory.item_set.all %}
+                                <li class="item">
+                                    <div class="item-content">
+                                        {% if item.photo %}
+                                            <img src="{{ item.photo.url }}" alt="{{ item.name }} Photo" style="max-width: 150px; max-height: 150px;">
+                                        {% endif %}
+                                        <h2><a href="{% url 'item_detail' item.id %}">{{ item.name }}</a></h2>
+                                        <p>Description: {{ item.description }}</p>
+                                        <p>Price: ${{ item.price }}</p>
+                                        <p>Stocks: {{ item.stocks }}</p>
+                                    </div>
+                                    <a href="{% url 'item_detail' item.id %}">Add to Cart</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
                 {% endfor %}
             </ul>
         {% endfor %}
     </ul>
-    {% endblock %}
+{% endblock %}

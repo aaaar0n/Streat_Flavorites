@@ -1,26 +1,81 @@
+{% load static %}
+
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Your Online Store{% endblock %}</title>
 </head>
 <body>
-    <header>
-        <h1>Your Online Store</h1>
-        <nav>
-            <ul>
-                <li><a href="{% url 'index' %}">Home</a></li>
-                <li><a href="{% url 'cart' %}">Cart</a></li>
-            </ul>
-        </nav>
-    </header>
-    
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
-    
-    <footer>
-        <p>&copy; {{ year }} Your Online Store</p>
-    </footer>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    .header {
+        background-color: #FFA351;
+        color: white;
+        text-align: center;
+        padding: 0px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .header-logo {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+    .header-logo img {
+        max-width: 200px;
+        max-height: 200px;
+        margin-right: 10px;
+        
+    }
+    .cart-button {
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        margin-left: 10px;
+    }
+    .subheader {
+        background-color: #b88a01;
+        color: black;
+        text-align: center;
+        padding: 20px;
+    }
+    .subheader a {
+        color: black;
+        text-decoration: none;
+        margin: 0 10px;
+    }
+
+</style>
+
+<div class="header">
+    <div class="header-logo">
+        <a href="{% url 'index' %}">
+            <img src="{% static 'logo.png' %}" alt="Logo">
+        </a>
+    </div>
+    <a href="{% url 'cart' %}" class="cart-button">Cart</a>
+</div>
+
+<div class="subheader">
+    {% for category in categories %}
+        <a href="{% url 'category_detail' category.id %}">{{ category.name }}</a>
+    {% endfor %}
+</div>
+
+<div class="content">
+    {% block content %}{% endblock %}
+</div>
+
 </body>
 </html>

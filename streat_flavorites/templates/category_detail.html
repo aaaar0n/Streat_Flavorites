@@ -12,6 +12,7 @@
             <ul>
                 {% for item in items %}
                     {% if item.subcategory == subcategory %}
+                        <img src="{{ item.photo.url }}" alt="{{ item.name }} Photo" style="max-width: 150px; max-height: 150px;">
                         <li><a href="{% url 'item_detail' item.id %}">{{ item.name }}</a> - {{ item.description }} - Price: ${{ item.price }} - Stocks: {{ item.stocks }}</li>
                         <a href="{% url 'add_to_cart' item.id %}">Add to Cart</a>
                     {% endif %}
