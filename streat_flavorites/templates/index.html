@@ -9,7 +9,7 @@
             <li><a href="{% url 'category_detail' category.id %}">{{ category.name }}</a></li>
             <ul>
                 {% for subcategory in category.subcategory_set.all %}
-                    <li>{{ subcategory.name }}</li>
+                    <li><a href="{% url 'subcategory_detail' subcategory.id %}">{{ subcategory.name }}</a></li>
                     <ul>
                         {% for item in subcategory.item_set.all %}
                             <li><a href="{% url 'item_detail' item.id %}">{{ item.name }}</a> - {{ item.description }} - Price: ${{ item.price }} - Stocks: {{ item.stocks }} <a href="{% url 'add_to_cart' item.id %}">Add to Cart</a></li>

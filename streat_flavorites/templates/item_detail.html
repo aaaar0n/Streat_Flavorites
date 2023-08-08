@@ -10,4 +10,21 @@
     <p>Subcategory: {{ item.subcategory.name }}</p>
     <p>Category: {{ item.subcategory.category.name }}</p>
     <a href="{% url 'add_to_cart' item.id %}">Add to Cart</a>
+    <p>Likes: <span id="like-count">{{ item.likes }}</span></p>
+
+    <button id="like-button" data-item-id="{{ item.id }}">Like</button>
+
+    <script>
+        const likeButton = document.getElementById('like-button');
+        const likeCount = document.getElementById('like-count');
+        
+        likeButton.addEventListener('click', () => {
+            const itemId = likeButton.getAttribute('data-item-id');
+            fetch(`/like_item/${itemId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    likeCount.textContent = data.likes;
+                });
+        });
+    </script>
     {% endblock %}

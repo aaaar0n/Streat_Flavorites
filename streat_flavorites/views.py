@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Category, Subcategory, Item
 from .models import Cart, CartItem
+from django.http import JsonResponse
 
 def index(request):
     categories = Category.objects.all()
@@ -29,8 +30,6 @@ def cart(request):
     cart_items = user_cart.cartitem_set.all()
 
     return render(request, 'cart.html', {'cart_items': cart_items})
-
-
 
 def add_to_cart(request, item_id):
     item = get_object_or_404(Item, pk=item_id)
@@ -69,3 +68,10 @@ def checkout(request):
 
 def order_confirmation(request):
     return render(request, 'order_confirmation.html')
+
+def like_item(request, item_id):
+    item = get_object_or_404(Item, pk=item_id)
+    item.likes += 1
+    item.save()
+
+    return JsonResponse({'likes': item.likes})
