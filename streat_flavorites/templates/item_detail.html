@@ -9,7 +9,11 @@
     <p>Stocks: {{ item.stocks }}</p>
     <p>Subcategory: {{ item.subcategory.name }}</p>
     <p>Category: {{ item.subcategory.category.name }}</p>
-    <a href="{% url 'add_to_cart' item.id %}">Add to Cart</a>
+    <form method="post" action="{% url 'add_to_cart' item.id %}">
+        {% csrf_token %}
+        Quantity: <input type="number" name="quantity" value="1" min="1">
+        <button type="submit">Add to Cart</button>
+    </form>
     <p>Likes: <span id="like-count">{{ item.likes }}</span></p>
 
     <button id="like-button" data-item-id="{{ item.id }}">Like</button>

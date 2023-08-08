@@ -8,7 +8,17 @@
     {% if cart_items %}
         <ul>
             {% for item in cart_items %}
-                <li>{{ item.name }} - {{ item.description }} - Price: ${{ item.price }} <a href="{% url 'remove_from_cart' item.id %}">Remove</a></li>
+                <div class="item">
+                    {% if item.item.photo %}
+                        <img src="{{ item.item.photo.url }}" alt="{{ item.item.name }} Photo" style="max-width: 100px; max-height: 100px;">
+                    {% endif %}
+                </div>
+                    <h2><a href="{% url 'item_detail' item.id %}">{{ item.name }}</a></h2>
+                    <p>Description: {{ item.description }}</p>
+                    <p>Price: ${{ item.price }}</p>
+                    <p>Quantity: {{ item.quantity }}</p>
+                    <!-- Other item details -->
+                
             {% endfor %}
         </ul>
     {% else %}
