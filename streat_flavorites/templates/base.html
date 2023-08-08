@@ -6,6 +6,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+
     <title>{% block title %}Your Online Store{% endblock %}</title>
 </head>
 <body>
@@ -20,10 +22,12 @@
         background-color: #FFA351;
         color: white;
         text-align: center;
-        padding: 0px;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        padding: 0px 0; /* Adjust padding to control header size */
+        height: auto; /* Adjust height as needed */
+        line-height: 0; /* Vertically center text */
     }
     .header-logo {
         display: flex;
@@ -31,8 +35,8 @@
         cursor: pointer;
     }
     .header-logo img {
-        max-width: 200px;
-        max-height: 200px;
+        max-width: 150px;
+        max-height: 150px;
         margin-right: 10px;
         
     }
@@ -48,14 +52,37 @@
         background-color: #b88a01;
         color: black;
         text-align: center;
-        padding: 20px;
+        padding: 5px;
+        font-family: 'Indie Flower', cursive;
+        font-weight: bold;
+        font-size: 36px;
+        width: 100%;
+        z-index: 1000; /* Ensure the subheader is above other elements */
+        transition: background-color 0.3s ease; /* Add smooth transition */
+        position: relative; /* Required for sticky behavior */
     }
+
+    .subheader.sticky {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add shadow */
+    }
+
     .subheader a {
         color: black;
         text-decoration: none;
         margin: 0 10px;
+        border-bottom: 1px solid transparent; /* Hide border by default */
+        padding-bottom: 4px; /* Optional: Add padding for spacing */
     }
 
+    .subheader a:hover {
+        border-bottom: 1px solid #00000000; /* Show border on hover */
+        background-color: #f8d300; /* Change background color on hover */
+        border-radius: 10px; /* Add rounded edge on hover */
+    }
 </style>
 
 <div class="header">
@@ -67,7 +94,7 @@
     <a href="{% url 'cart' %}" class="cart-button">Cart</a>
 </div>
 
-<div class="subheader">
+<div class="subheader" id="subheader">
     {% for category in categories %}
         <a href="{% url 'category_detail' category.id %}">{{ category.name }}</a>
     {% endfor %}
@@ -76,6 +103,21 @@
 <div class="content">
     {% block content %}{% endblock %}
 </div>
+
+<script>
+    window.onscroll = function() {stickySubheader()};
+    
+    var subheader = document.getElementById("subheader");
+    var sticky = subheader.offsetTop;
+
+    function stickySubheader() {
+        if (window.pageYOffset > sticky) {
+            subheader.classList.add("sticky");
+        } else {
+            subheader.classList.remove("sticky");
+        }
+    }
+</script>
 
 </body>
 </html>

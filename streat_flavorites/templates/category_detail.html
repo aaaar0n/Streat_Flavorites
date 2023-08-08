@@ -5,16 +5,15 @@
 {% block content %}
     <h1>{{ category.name }}</h1>
     
-    <h2>Subcategories:</h2>
+
     <ul>
         {% for subcategory in subcategories %}
-            <li><a href="{% url 'subcategory_detail' subcategory.id %}">{{ subcategory.name }}</a></li>
+            <h2><a href="{% url 'subcategory_detail' subcategory.id %}">{{ subcategory.name }}</a></h2>
             <ul>
                 {% for item in items %}
                     {% if item.subcategory == subcategory %}
                         <img src="{{ item.photo.url }}" alt="{{ item.name }} Photo" style="max-width: 150px; max-height: 150px;">
                         <li><a href="{% url 'item_detail' item.id %}">{{ item.name }}</a> - {{ item.description }} - Price: ${{ item.price }} - Stocks: {{ item.stocks }}</li>
-                        <a href="{% url 'add_to_cart' item.id %}">Add to Cart</a>
                     {% endif %}
                 {% endfor %}
             </ul>

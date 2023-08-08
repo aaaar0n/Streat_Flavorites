@@ -23,7 +23,6 @@
                                         <p>Price: ${{ item.price }}</p>
                                         <p>Stocks: {{ item.stocks }}</p>
                                     </div>
-                                    <a href="{% url 'item_detail' item.id %}">Add to Cart</a>
                                 </li>
                             {% endfor %}
                         </ul>
