@@ -25,6 +25,8 @@
                 
             {% endfor %}
         </ul>
+        <p>Total Items: {{ total_items }}</p>
+        <p>Total Price: ${{ total_price }}</p>
     {% else %}
         <p>Your cart is empty.</p>
     {% endif %}

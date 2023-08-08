@@ -31,7 +31,11 @@ def cart(request):
     
     total_items = sum(item.quantity for item in cart_items)
     
-    return render(request, 'cart.html', {'cart_items': cart_items, 'total_items': total_items})
+    # Calculate total price
+    total_price = sum(item.item.price * item.quantity for item in cart_items)
+    
+    return render(request, 'cart.html', {'cart_items': cart_items, 'total_items': total_items, 'total_price': total_price})
+
 
 def add_to_cart(request, item_id):
     item = get_object_or_404(Item, pk=item_id)
