@@ -7,17 +7,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
 
     <title>{% block title %}Your Online Store{% endblock %}</title>
 </head>
-<body>
+
 
 <style>
     body {
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
+        background-color: #f0f0f0; /* Set background color for the body */
     }
+
+    .container {
+        max-width: 1500px; /* Adjust the maximum width as needed */
+        margin: 0 auto; /* Center the container horizontally */
+        padding: 20px; /* Add padding for spacing */
+    }
+
     .header {
         background-color: #FFA351;
         color: white;
@@ -25,7 +35,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0px 0; /* Adjust padding to control header size */
+        padding: 5px 0; /* Adjust padding to control header size */
         height: auto; /* Adjust height as needed */
         line-height: 0; /* Vertically center text */
     }
@@ -35,31 +45,66 @@
         cursor: pointer;
     }
     .header-logo img {
-        max-width: 150px;
-        max-height: 150px;
+        max-width: 250px;
+        max-height: 250px;
         margin-right: 10px;
         
     }
-    .cart-button {
-        background-color: #007BFF;
-        color: white;
-        border: none;
-        padding: 5px 10px;
-        cursor: pointer;
-        margin-left: 10px;
+
+    .header h1 {
+        margin: 0;
+        padding: 10px 0;
     }
+
+    .search-form {
+        display: flex;
+        align-items: center;
+        padding: 10px; /* Adjust padding as needed */
+        border-radius: 20px; /* Add rounded edges */
+        background-color: #fff; /* Set background color for search bar */
+    }
+
+    .search-input {
+        width: 200px; /* Adjust width as needed */
+        padding: 8px; /* Adjust padding as needed */
+        border: none;
+        border-radius: 20px; /* Add rounded edges */
+    }
+
+    .search-button {
+        padding: 10px 20px; /* Adjust padding as needed */
+        border: none;
+        border-radius: 20px; /* Add rounded edges */
+        background-color: #FFA351;
+        color: white;
+        cursor: pointer;
+    }
+
+    .cart-link {
+        display: flex;
+        align-items: center;
+    }
+
+    .cart-image {
+        width: 100px; /* Adjust the width as needed */
+        height: auto; /* Maintain aspect ratio */
+        margin-left: 10px; /* Add spacing between logo and cart image */
+        margin-right: 20px; /* Adjust the right margin for positioning */
+    }
+
     .subheader {
-        background-color: #b88a01;
+        background-color: #FBE27A;
         color: black;
         text-align: center;
         padding: 5px;
-        font-family: 'Indie Flower', cursive;
+        font-family: 'Montserrat', sans-serif;
         font-weight: bold;
         font-size: 36px;
         width: 100%;
         z-index: 1000; /* Ensure the subheader is above other elements */
         transition: background-color 0.3s ease; /* Add smooth transition */
         position: relative; /* Required for sticky behavior */
+
     }
 
     .subheader.sticky {
@@ -76,6 +121,9 @@
         margin: 0 10px;
         border-bottom: 1px solid transparent; /* Hide border by default */
         padding-bottom: 4px; /* Optional: Add padding for spacing */
+        border-right: 1px solid #FFA351; /* Add a thin vertical line */
+        padding-right: 20px; /* Add some spacing to the right of each category */
+        
     }
 
     .subheader a:hover {
@@ -83,26 +131,156 @@
         background-color: #f8d300; /* Change background color on hover */
         border-radius: 10px; /* Add rounded edge on hover */
     }
-</style>
 
-<div class="header">
-    <div class="header-logo">
-        <a href="{% url 'index' %}">
-            <img src="{% static 'logo.png' %}" alt="Logo">
+    .category-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .category {
+        background-color: #f8d30000;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .item-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px; /* Add spacing between items */
+    }
+
+    .item-box {
+        border: 2px solid #ddd; /* Thicker border for separation */
+        border-radius: 10px; /* Add rounded edges */
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow */
+        padding: 10px; /* Adjust padding for spacing */
+        margin: 5px; /* Adjust margin for spacing between item boxes */
+        vertical-align: top; /* Align item boxes at the top */
+        width: calc(10% - 10px); /* Calculate width for three items per row with margins */
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .item-image {
+        max-width: 100%;
+        max-height: 150px;
+        margin-bottom: 10px; /* Add margin at the bottom */
+    }
+
+    .item-description {
+        text-align: center;
+        font-style: italic;
+        margin-bottom: 10px;
+    }
+
+    .item-price {
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .item-stock {
+        text-align: center;
+        color: #007BFF;
+        font-size: 14px;
+    }
+
+    .subcategory-link {
+        font-size: 32px; /* Adjust the font size as needed */
+        font-weight: bold; /* Add bold font weight */
+    }
+    
+    a {
+    text-decoration: none; /* Remove underline */
+    /* Additional styling if needed */
+    }
+
+    .banner-container {
+        width: 100%;
+        max-width: 1400px; /* Adjust the max width as needed */
+        margin: 0 auto;
+        padding: 20px; /* Add space on the sides */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-bottom: 1px solid #ccc; /* Add a 1px solid border at the bottom */
+    }
+
+    .banner-image {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .category-dropdown {
+        color: black;
+        text-decoration: none;
+        margin: 0 10px;
+        border-bottom: 1px solid transparent;
+        padding-bottom: 4px;
+        cursor: pointer;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: white;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 1;
+        border-radius: 5px;
+        padding: 10px;
+        font-size: 16px; /* Adjust the font size as needed */
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+</style>
+<body>
+    <div class="header">
+        <div class="header-logo">
+            <a href="{% url 'index' %}">
+                <img src="{% static 'logo1.png' %}" alt="Logo">
+            </a>
+        </div>
+        <form action="{% url 'search_items' %}" method="GET" class="search-form">
+            <input type="text" name="query" class="search-input" placeholder="Search for items...">
+            <button type="submit" class="search-button">Search</button>
+        </form>
+
+        
+        <a href="{% url 'cart' %}" class="cart-link">
+            <img src="{% static 'cart.png' %}" alt="Cart" class="cart-image">
         </a>
     </div>
-    <a href="{% url 'cart' %}" class="cart-button">Cart</a>
-</div>
 
-<div class="subheader" id="subheader">
-    {% for category in categories %}
-        <a href="{% url 'category_detail' category.id %}">{{ category.name }}</a>
-    {% endfor %}
-</div>
+    <div class="subheader" id="subheader">
+        {% for category in categories %}
+            <div class="dropdown">
+                <a href="#" class="category-dropdown">{{ category.name }}</a>
+                <div class="dropdown-content">
+                    {% for subcategory in category.subcategory_set.all %}
+                        <a href="{% url 'subcategory_detail' subcategory.id %}">{{ subcategory.name }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 
-<div class="content">
-    {% block content %}{% endblock %}
-</div>
+    <div class="content">
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
 
 <script>
     window.onscroll = function() {stickySubheader()};
@@ -117,6 +295,16 @@
             subheader.classList.remove("sticky");
         }
     }
+</script>
+<script>
+    const dropdownButtons = document.querySelectorAll('.category-dropdown');
+    
+    dropdownButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            button.nextElementSibling.classList.toggle('show');
+        });
+    });
+
 </script>
 
 </body>

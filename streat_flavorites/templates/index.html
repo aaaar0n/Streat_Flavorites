@@ -1,34 +1,42 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %}Home - Your Online Store{% endblock %}
 
 {% block content %}
+    <div class="banner-container">
+        <img src="{% static 'banner2.jpg' %}" alt="Banner Image" class="banner-image">
+    </div>
+
     <h1>Welcome to Our Online Store</h1>
-    <ul class="category-list">
+    <div class="category-container">
         {% for category in categories %}
-            <li><a href="{% url 'category_detail' category.id %}">{{ category.name }}</a></li>
-            <ul class="subcategory-list">
-                {% for subcategory in category.subcategory_set.all %}
-                    <li class="subcategory">
-                        <a href="{% url 'subcategory_detail' subcategory.id %}">{{ subcategory.name }}</a>
-                        <ul class="item-list">
-                            {% for item in subcategory.item_set.all %}
-                                <li class="item">
-                                    <div class="item-content">
-                                        {% if item.photo %}
-                                            <img src="{{ item.photo.url }}" alt="{{ item.name }} Photo" style="max-width: 150px; max-height: 150px;">
-                                        {% endif %}
-                                        <h2><a href="{% url 'item_detail' item.id %}">{{ item.name }}</a></h2>
-                                        <p>Description: {{ item.description }}</p>
-                                        <p>Price: ${{ item.price }}</p>
-                                        <p>Stocks: {{ item.stocks }}</p>
-                                    </div>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </li>
-                {% endfor %}
-            </ul>
+            <div class="category">
+                <h2>{{ category.name }}</h2>
+                <ul class="subcategory-list">
+                    {% for subcategory in category.subcategory_set.all %}
+                        <li class="subcategory">
+                            <a href="{% url 'subcategory_detail' subcategory.id %}" class="subcategory-link">{{ subcategory.name }}</a>
+                            <ul class="item-list">
+                                <div class="item-container">
+                                    {% for item in subcategory.item_set.all %}
+                                        <div class="item-box">
+                                            {% if item.photo %}
+                                                <img src="{{ item.photo.url }}" alt="{{ item.name }} Photo" class="item-image">
+                                            {% endif %}
+                                            <h2><a href="{% url 'item_detail' item.id %}">{{ item.name }}</a></h2>
+                                            <p class="item-description">{{ item.description }}</p>
+                                            <p class="item-price">${{ item.price }}</p>
+                                            <p class="item-stock">Stocks: {{ item.stocks }}</p>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
         {% endfor %}
-    </ul>
+    </div>
 {% endblock %}

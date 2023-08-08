@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+    <h2>Search Results for "{{ query }}"</h2>
+    
+    <ul>
+        {% for item in items %}
+            <li>
+                <div class="search-result">
+                    {% if item.photo %}
+                        <img src="{{ item.photo.url }}" alt="{{ item.name }} Photo" class="search-result-img">
+                    {% endif %}
+                    <div class="search-result-details">
+                        <h3><a href="{% url 'item_detail' item.id %}">{{ item.name }}</a></h3>
+                        <p>Description: {{ item.description }}</p>
+                        <p>Price: ${{ item.price }}</p>
+                        <p>Stocks: {{ item.stocks }}</p>
+                        <!-- Display other item details... -->
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    
+    {% if not items %}
+        <p>No items found.</p>
+    {% endif %}
+{% endblock %}

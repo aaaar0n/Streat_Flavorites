@@ -12,5 +12,6 @@ urlpatterns = [
     path('order_confirmation/', views.order_confirmation, name='order_confirmation'),  # Create this view and template
     path('remove_from_cart/<int:item_id>/', views.remove_from_cart, name='remove_from_cart'),
     path('like_item/<int:item_id>/', views.like_item, name='like_item'),
-
+    path('search/', views.search_items, name='search_items'),
+    
 ]
