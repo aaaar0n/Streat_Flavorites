@@ -78,12 +78,8 @@
 
     .subheader {
         background-color: #FBE27A;
-        color: black;
         text-align: center;
-        padding: 5px;
-        font-family: 'Montserrat', sans-serif;
-        font-weight: bold;
-        font-size: 36px;
+        padding: 15px;
         width: 100%;
         z-index: 1000; /* Ensure the subheader is above other elements */
         transition: background-color 0.3s ease; /* Add smooth transition */
@@ -101,12 +97,14 @@
 
     .subheader a {
         color: black;
+        font-weight: bold;
         text-decoration: none;
-        margin: 0 10px;
+        margin: 0 5px;
         border-bottom: 1px solid transparent; /* Hide border by default */
         padding-bottom: 4px; /* Optional: Add padding for spacing */
         border-right: 0px solid #FFA351; /* Add a thin vertical line */
-        padding-right: 20px; /* Add some spacing to the right of each category */
+        padding-right: 10px; /* Add some spacing to the right of each category */
+        font-size: 24px;
     }
 
     .subheader a:hover {
@@ -172,7 +170,7 @@
     .dropdown-content {
         display: none;
         position: absolute;
-        background-color: white;
+        background-color: #fff2c0;
         box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
         z-index: 1;
         border-radius: 5px;
@@ -183,8 +181,6 @@
     .dropdown:hover .dropdown-content {
         display: block;
     }
-
-    
 
     .floating-cart-button {
         position: fixed;
