@@ -28,12 +28,13 @@
             <button type="submit" class="search-button">Search</button>
         </form>
 
-        
+                    <!-- --------------... CART ...-------------- --> 
         <a href="{% url 'cart' %}" class="cart-link">
             <img src="{% static 'cart1.png' %}" alt="Cart" class="cart-image">
         </a>
     </div>
 
+                    <!-- --------------... SUB-HEADER ...-------------- -->
     <div class="subheader" id="subheader">
         {% for category in categories %}
             <div class="dropdown">
@@ -53,30 +54,45 @@
         </div>
     </div>
 
-<script>
-    window.onscroll = function() {stickySubheader()};
-    
-    var subheader = document.getElementById("subheader");
-    var sticky = subheader.offsetTop;
+    <div class="floating-search-bar" id="floating-search-bar">
+        <form action="{% url 'search_items' %}" method="get" class="floating-search-form">
+            <input type="text" name="query" placeholder="Search for items..." class="floating-search-input">
+            <button type="submit" class="search-button">Search</button>
+        </form>
+    </div>
 
-    function stickySubheader() {
-        if (window.pageYOffset > sticky) {
-            subheader.classList.add("sticky");
-        } else {
-            subheader.classList.remove("sticky");
+    <div class="floating-cart-button">
+        <a href="{% url 'cart' %}">
+            <img src="{% static 'cart1.png' %}" alt="Cart" class="cart-image-float">
+        </a>
+    </div>
+
+    <script src="{% static 'js/floating-search.js' %}"></script>
+
+    <script>
+        window.onscroll = function() {stickySubheader()};
+        
+        var subheader = document.getElementById("subheader");
+        var sticky = subheader.offsetTop;
+
+        function stickySubheader() {
+            if (window.pageYOffset > sticky) {
+                subheader.classList.add("sticky");
+            } else {
+                subheader.classList.remove("sticky");
+            }
         }
-    }
-</script>
-<script>
-    const dropdownButtons = document.querySelectorAll('.category-dropdown');
-    
-    dropdownButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            button.nextElementSibling.classList.toggle('show');
+    </script>
+    <script>
+        const dropdownButtons = document.querySelectorAll('.category-dropdown');
+        
+        dropdownButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                button.nextElementSibling.classList.toggle('show');
+            });
         });
-    });
 
-</script>
+    </script>
 
 </body>
 </html>

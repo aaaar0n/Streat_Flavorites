@@ -240,3 +240,39 @@
         width: calc(32% - 10px); /* Calculate width for three items per row with margins */
         text-align: center;
     }
+
+    .floating-cart-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+    }
+    
+    .cart-image-float {
+        width: 100px; /* Adjust the width as needed */
+        height: auto; /* Maintain aspect ratio */
+        display: block;
+    }
+
+    .floating-search-bar {
+        display: none;
+        position: fixed;
+        top: 60px;
+        left: 20px;
+        z-index: 1000;
+    }
+
+    .floating-search-form {
+        display: flex;
+        align-items: center;
+        padding: 10px; /* Adjust padding as needed */
+        border-radius: 20px; /* Add rounded edges */
+        background-color: #FBE27A; /* Set background color for search bar */
+    }
+
+    .floating-search-input {
+        width: 150px; /* Adjust width as needed */
+        padding: 8px; /* Adjust padding as needed */
+        border: none;
+        border-radius: 20px; /* Add rounded edges */
+    }
