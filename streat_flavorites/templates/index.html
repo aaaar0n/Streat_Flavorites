@@ -9,7 +9,7 @@
         <img src="{% static 'banner2.jpg' %}" alt="Banner Image" class="banner-image">
     </div>
 
-    <h1>Welcome to Our Online Store</h1>
+    <h1>Welcome to StrEAT Flavorites Mini-Online Store</h1>
     <div class="category-container">
         {% for category in categories %}
             <div class="category">
@@ -25,7 +25,7 @@
                                             {% if item.photo %}
                                                 <img src="{{ item.photo.url }}" alt="{{ item.name }} Photo" class="item-image">
                                             {% endif %}
-                                            <h2><a href="{% url 'item_detail' item.id %}">{{ item.name }}</a></h2>
+                                            <h2><a href="{% url 'item_detail' item.id %}" class="item-name">{{ item.name }}</a></h2>
                                             <p class="item-description">{{ item.description }}</p>
                                             <p class="item-price">${{ item.price }}</p>
                                             <p class="item-stock">Stocks: {{ item.stocks }}</p>
