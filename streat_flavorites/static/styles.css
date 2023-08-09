@@ -1,4 +1,3 @@
-
     body {
         font-family: Arial, sans-serif;
         margin: 0;
@@ -19,6 +18,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        position: sticky;
         padding: 5px 0; /* Adjust padding to control header size */
         height: auto; /* Adjust height as needed */
         line-height: 0; /* Vertically center text */
@@ -107,7 +107,6 @@
         padding-bottom: 4px; /* Optional: Add padding for spacing */
         border-right: 0px solid #FFA351; /* Add a thin vertical line */
         padding-right: 20px; /* Add some spacing to the right of each category */
-        
     }
 
     .subheader a:hover {
@@ -138,7 +137,7 @@
     .item-box {
     border: 4px solid #ddd;
     border-radius: 10px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 2px 4px rgba(255, 0, 0, 0.1);
     padding: 10px;
     margin: 5px;
     vertical-align: top;
@@ -165,7 +164,7 @@
         font-size: 32px; /* Adjust the font size as needed */
         font-weight: bold; /* Add bold font weight */
     }
-    
+
     a {
     text-decoration: none; /* Remove underline */
     /* Additional styling if needed */
@@ -214,4 +213,30 @@
 
     .dropdown:hover .dropdown-content {
         display: block;
+    }
+
+    .top-liked-items-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin: 20px 0;
+    }
+
+    .top-liked-items {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        width: 100%;
+        margin: 0;
+    }
+
+    .top-liked-items .item-box {
+        border: 4px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        margin: 5px;
+        vertical-align: top;
+        width: calc(32% - 10px); /* Calculate width for three items per row with margins */
+        text-align: center;
     }
