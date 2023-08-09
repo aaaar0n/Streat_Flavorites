@@ -1,16 +1,35 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %}Home - Your Online Store{% endblock %}
 
 {% block content %}
-    <h1>{{ subcategory.name }}</h1>
-    <p>Category: {{ subcategory.category.name }}</p>
-    
-    <h2>Items:</h2>
-    <ul>
-        {% for item in items %}
-            <li><a href="{% url 'item_detail' item.id %}">{{ item.name }}</a> - {{ item.description }} - Price: ${{ item.price }} - Stocks: {{ item.stocks }}</li>
-            <a href="{% url 'add_to_cart' item.id %}">Add to Cart</a>
-        {% endfor %}
-    </ul>
-    {% endblock %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index_styles.css' %}">
+    <div class="category-container">
+        <div class="category">
+            <h2>{{ subcategory.category.name }}</h2>
+            <h2>{{ subcategory.name }}</h2>
+            <ul class="subcategory-list">
+                <div class="subcategory"> 
+                    <ul class="item-list">
+                        <div class="item-container">
+                            {% for item in items %}
+                                <div class="item-box">
+                                    {% if item.photo %}
+                                        <a href="{% url 'item_detail' item.id %}">
+                                            <img src="{{ item.photo.url }}" alt="{{ item.name }} Photo" class="item-image">
+                                        </a>
+                                    {% endif %}
+                                    <h3><a href="{% url 'item_detail' item.id %}" class="item-name">{{ item.name }}</a></h3>
+                                    <p class="item-price">${{ item.price }}</p>
+                                    <p class="item-stock">Stocks: {{ item.stocks }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </ul>
+                </div>
+            </ul>
+        </div>
+    </div>
+{% endblock %}
