@@ -1,22 +1,42 @@
 {% extends 'base.html' %}
 
-{% block title %}Home - Your Online Store{% endblock %}
+{% load static %}
+
+{% block title %}Category Detail - Your Online Store{% endblock %}
 
 {% block content %}
-    <h1>{{ category.name }}</h1>
-    
-
-    <ul>
-        {% for subcategory in subcategories %}
-            <h2><a href="{% url 'subcategory_detail' subcategory.id %}">{{ subcategory.name }}</a></h2>
-            <ul>
-                {% for item in items %}
-                    {% if item.subcategory == subcategory %}
-                        <img src="{{ item.photo.url }}" alt="{{ item.name }} Photo" style="max-width: 150px; max-height: 150px;">
-                        <li><a href="{% url 'item_detail' item.id %}">{{ item.name }}</a> - {{ item.description }} - Price: ${{ item.price }} - Stocks: {{ item.stocks }}</li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-        {% endfor %}
-    </ul>
-    {% endblock %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index_styles.css' %}">
+    <div class="container">
+        <div class="category-container">
+            <div class="category">
+                <h2>{{ category.name }}</h2>
+                <ul class="subcategory-list">
+                    {% for subcategory in subcategories %}
+                        <div class="subcategory">
+                            <h3><a href="{% url 'subcategory_detail' subcategory.id %}" class="subcategory-link">{{ subcategory.name }}</a></h3>
+                            <ul class="item-list">
+                                <div class="item-container">
+                                    {% for item in items %}
+                                        {% if item.subcategory == subcategory %}
+                                            <div class="item-box">
+                                                {% if item.photo %}
+                                                    <a href="{% url 'item_detail' item.id %}">
+                                                        <img src="{{ item.photo.url }}" alt="{{ item.name }} Photo" class="item-image">
+                                                    </a>
+                                                {% endif %}
+                                                <h4><a href="{% url 'item_detail' item.id %}" class="item-name">{{ item.name }}</a></h4>
+                                                <p class="item-description">{{ item.description }}</p>
+                                                <p class="item-price">${{ item.price }}</p>
+                                                <p class="item-stock">Stocks: {{ item.stocks }}</p>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </ul>
+                        </div>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
