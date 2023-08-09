@@ -41,7 +41,7 @@
                             <a href="{% url 'subcategory_detail' subcategory.id %}" class="subcategory-link">{{ subcategory.name }}</a>
                             <ul class="item-list">
                                 <div class="item-container">
-                                    {% for item in subcategory.item_set.all|slice:":5" %}
+                                    {% for item in subcategory.item_set.all|slice:":6" %}
                                         <div class="item-box">
                                             {% if item.photo %}
                                                 <a href="{% url 'item_detail' item.id %}">

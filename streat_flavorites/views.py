@@ -5,7 +5,7 @@ from django.http import JsonResponse
 
 def index(request):
     categories = Category.objects.all()
-    top_liked_items = Item.objects.order_by('-likes')[:5]
+    top_liked_items = Item.objects.order_by('-likes')[:6]
     context_dict = {'categories': categories, 'top_liked_items': top_liked_items}
 
     return render(request, 'index.html', context_dict)
