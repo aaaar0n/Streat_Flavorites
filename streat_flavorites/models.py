@@ -23,6 +23,7 @@ class Item(models.Model):
     subcategory = models.ForeignKey(Subcategory, on_delete=models.CASCADE)
     likes = models.PositiveIntegerField(default=0)
     photo = models.ImageField(upload_to='item_photos/', null=True, blank=True)
+    weight_grams = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.name
