@@ -30,7 +30,8 @@ def subcategory_detail(request, subcategory_id):
 def item_detail(request, item_id):
     item = get_object_or_404(Item, pk=item_id)
     categories = Category.objects.all()
-    context_dict = {'item': item, 'categories': categories}
+    recommended_items = Item.objects.filter(subcategory=item.subcategory).exclude(id=item_id).order_by('?')[:5]
+    context_dict = {'item': item, 'categories': categories, 'recommended_items': recommended_items,}
 
     return render(request, 'item_detail.html', context_dict)
 

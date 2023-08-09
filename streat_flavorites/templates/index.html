@@ -5,7 +5,7 @@
 {% block title %}Home - Your Online Store{% endblock %}
 
 {% block content %}
-
+<link rel="stylesheet" type="text/css" href="{% static 'css/index_styles.css' %}">
     <div class="banner-container">
         <img src="{% static 'banner2.jpg' %}" alt="Banner Image" class="banner-image">
     </div>
@@ -18,13 +18,15 @@
                 {% for item in top_liked_items %}
                     <div class="item-box">
                         {% if item.photo %}
-                            <img src="{{ item.photo.url }}" alt="{{ item.name }} Photo" class="item-image">
-                        {% endif %}
-                        <h2><a href="{% url 'item_detail' item.id %}" class="item-name">{{ item.name }}</a></h2>
-                        <p class="item-description">{{ item.description }}</p>
-                        <p class="item-price">${{ item.price }}</p>
-                        <p class="item-stock">Stocks: {{ item.stocks }}</p>
-                    </div>
+                            <a href="{% url 'item_detail' item.id %}">
+                                <img src="{{ item.photo.url }}" alt="{{ item.name }} Photo" class="item-image">
+                            </a>
+                                {% endif %}
+                            <h2><a href="{% url 'item_detail' item.id %}" class="item-name">{{ item.name }}</a></h2>
+                            <p class="item-description">{{ item.description }}</p>
+                            <p class="item-price">${{ item.price }}</p>
+                            <p class="item-stock">Stocks: {{ item.stocks }}</p>
+                        </div>
                 {% endfor %}
             </div>
         </div>

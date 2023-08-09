@@ -1,23 +1,54 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %}Home - Your Online Store{% endblock %}
 
 {% block content %}
-    <h1>{{ item.name }}</h1>
-    <img src="{{ item.photo.url }}" alt="{{ item.name }} Photo" style="max-width: 150px; max-height: 150px;">
-    <p>Description: {{ item.description }}</p>
-    <p>Price: ${{ item.price }}</p>
-    <p>Stocks: {{ item.stocks }}</p>
-    <p>Subcategory: {{ item.subcategory.name }}</p>
-    <p>Category: {{ item.subcategory.category.name }}</p>
-    <form method="post" action="{% url 'add_to_cart' item.id %}">
-        {% csrf_token %}
-        Quantity: <input type="number" name="quantity" value="1" min="1">
-        <button type="submit">Add to Cart</button>
-    </form>
-    <p>Likes: <span id="like-count">{{ item.likes }}</span></p>
+<link rel="stylesheet" type="text/css" href="{% static 'css/item_details_styles.css' %}">
+    <div class="container">
+        <div class="item-details">
+            <div class="item-image-container">
+                <img src="{{ item.photo.url }}" alt="{{ item.name }} Photo" style="max-width: 300px; max-height: 300px;">
+            </div>
+            <div class="item-info">
+                <h2>{{ item.name }}</h2>
+                <p class="item-description">{{ item.description }}</p>
+                <p class="item-price">Price: ${{ item.price }}</p>
+                <p class="item-stock">Stocks: {{ item.stocks }}</p>
+                <div class="quantity-adjustment">
+                    <form method="post" action="{% url 'add_to_cart' item.id %}">
+                        {% csrf_token %}
+                        Quantity: <input type="number" name="quantity" value="1" min="1" max="{{ item.stocks }}">
+                        <button type="submit" class="add-to-cart-button">Add to Cart</button>
+                    </form>
+                </div>
+                <div class="like-section">
+                    <button id="like-button" data-item-id="{{ item.id }}" class="like-button">Like</button>
+                    <p>Likes: <span id="like-count">{{ item.likes }}</span></p>
+                </div>
+            </div>
+        </div>
 
-    <button id="like-button" data-item-id="{{ item.id }}">Like</button>
+        <div class="recommended-items">
+            <h3>Recommended Items</h3>
+            <div class="item-container">
+                {% for recommended_item in recommended_items %}
+                    <div class="item-box">
+                        {% if recommended_item.photo %}
+                            <a href="{% url 'item_detail' recommended_item.id %}">
+                                <img src="{{ recommended_item.photo.url }}" alt="{{ recommended_item.name }} Photo" class="item-image">
+                            </a>
+                        {% endif %}
+                        <h2><a href="{% url 'item_detail' recommended_item.id %}" class="item-name">{{ recommended_item.name }}</a></h2>
+                        <p class="item-description">{{ recommended_item.description }}</p>
+                        <p class="item-price">${{ recommended_item.price }}</p>
+                        <p class="item-stock">Stocks: {{ recommended_item.stocks }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 
     <script>
         const likeButton = document.getElementById('like-button');
