@@ -35,7 +35,7 @@
                         <td class="item-quantity">
                             <form method="post" action="{% url 'adjust_cart' item.id %}" class="adjust-quantity-form">
                                 {% csrf_token %}
-                                <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="{{ item.item.stocks }}">
+                                <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="{{ item.item.stocks }}" style="width: 40px;">
                                 <button type="submit" class="adjust-quantity-button">Adjust</button>
                             </form>
                         </td>

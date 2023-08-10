@@ -1,28 +1,48 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %}Search Results{% endblock %}
 
 {% block content %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/search_results.css' %}">
     <h2>Search Results for "{{ query }}"</h2>
     
-    <ul>
+    <div class="item-container">
         {% for item in items %}
-            <li>
-                <div class="search-result">
-                    {% if item.photo %}
-                        <img src="{{ item.photo.url }}" alt="{{ item.name }} Photo" class="search-result-img">
-                    {% endif %}
-                    <div class="search-result-details">
-                        <h3><a href="{% url 'item_detail' item.id %}">{{ item.name }}</a></h3>
-                        <p>Description: {{ item.description }}</p>
-                        <p>Price: ${{ item.price }}</p>
-                        <p>Stocks: {{ item.stocks }}</p>
-                        <!-- Display other item details... -->
-                    </div>
-                </div>
-            </li>
+            <div class="item-box">
+                {% if item.photo %}
+                    <a href="{% url 'item_detail' item.id %}">
+                        <img src="{{ item.photo.url }}" alt="{{ item.name }} Photo" class="item-image">
+                    </a>
+                {% endif %}
+                <h2><a href="{% url 'item_detail' item.id %}" class="item-name">{{ item.name }}</a></h2>
+                <!-- <p class="item-description">{{ item.description }}</p> -->
+                <p class="item-price">${{ item.price }}</p>
+                <p class="item-stock">Stocks: {{ item.stocks }}</p>
+                <!-- Display other item details... -->
+            </div>
         {% endfor %}
-    </ul>
+    </div>
+
+    <div class="recommended-items">
+        <h3>Items that you might like: </h3>
+        <div class="item-container">
+            {% for item in random_items %}
+                <div class="item-box">
+                    {% if item.photo %}
+                        <a href="{% url 'item_detail' item.id %}">
+                            <img src="{{ item.photo.url }}" alt="{{ item.name }} Photo" class="item-image">
+                        </a>
+                    {% endif %}
+                    <h2><a href="{% url 'item_detail' item.id %}" class="item-name">{{ item.name }}</a></h2>
+                    <!-- <p class="item-description">{{ item.description }}</p> -->
+                    <p class="item-price">${{ item.price }}</p>
+                    <p class="item-stock">Stocks: {{ item.stocks }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
     
     {% if not items %}
         <p>No items found.</p>

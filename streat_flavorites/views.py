@@ -100,13 +100,16 @@ def remove_from_cart(request, item_id):
     return redirect('cart')  # Redirect back to the cart page
 
 def search_items(request):
+    random_items = Item.objects.order_by('?')[:12]
+    categories = Category.objects.all()
     query = request.GET.get('query')
     if query:
         items = Item.objects.filter(name__icontains=query)
     else:
         items = []
 
-    return render(request, 'search_results.html', {'query': query, 'items': items})
+    context_dict = {'query': query, 'items': items, 'categories': categories, 'random_items': random_items}
+    return render(request, 'search_results.html', context_dict)
 
 def checkout(request):
     categories = Category.objects.all()
