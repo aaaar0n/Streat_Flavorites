@@ -1,11 +1,46 @@
 {% load static %}
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .footer {
+        background-color: #FFA351;
+        color: white;
+        text-align: center;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        padding: 15px 0; /* Adjust padding for vertical spacing */
+        font-size: 24px; /* Adjust font size */
+    }
+    
+    .footer-logo {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+    
+    .footer-logo img {
+        max-width: 150px; /* Adjust the max width as needed */
+        max-height: 150px; /* Adjust the max height as needed */
+        margin-right: 10px;
+    }
+    
+    .footer h1 {
+        margin: 0;
+        padding: 10px 0;
+    }
+    
+    .footer-contact {
+        padding-right: 20px; /* Add space on the right for contact details */
+    }
+
+
 </style>
 
 <!DOCTYPE html>
@@ -75,6 +110,19 @@
             <img src="{% static 'cart1.png' %}" alt="Cart" class="cart-image-float">
         </a>
     </div>
+
+    <div class="footer">
+        <div class="footer-logo">
+            <img src="{% static 'images/logo.png' %}" alt="Logo">
+            <h1>Your Online Store</h1>
+        </div>
+        <div class="footer-contact">
+            <p>Contact us: contact@example.com</p>
+            <p>Phone: 123-456-7890</p>
+        </div>
+    </div>
+    
+    
 
     <script src="{% static 'js/floating-search.js' %}"></script>
 
