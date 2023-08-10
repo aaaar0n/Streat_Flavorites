@@ -6,6 +6,7 @@
 
 {% block content %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/item_details_styles.css' %}">
+
     <div class="container">
         <div class="item-directory">
             <a href="{% url 'index' %}">Home</a> &raquo;
@@ -23,14 +24,13 @@
                 <p class="item-price">Price: ${{ item.price }}</p>
                 <p class="item-stock">Stocks: {{ item.stocks }}</p>
                 <div class="quantity-adjustment">
-                    <form method="post" action="{% url 'add_to_cart' item.id %}">
+                    <form method="post" action="{% url 'add_to_cart' item.id %}" class="add-to-cart-form">
                         {% csrf_token %}
                         <input type="hidden" name="item_id" value="{{ item.id }}">
                         Quantity: <input type="number" name="quantity" value="1" min="1" max="{{ item.stocks }}">
                         <button type="submit" class="add-to-cart-button">Add to Cart</button>
                     </form>
                 </div>
-                
                 <div class="like-section">
                     <button id="like-button" data-item-id="{{ item.id }}" class="like-button">Like</button>
                     <p>Likes: <span id="like-count">{{ item.likes }}</span></p>
@@ -74,6 +74,40 @@
                 .then(data => {
                     likeCount.textContent = data.likes;
                 });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <script>
+        // Attach submit event listener to "Add to Cart" form
+        const addToCartForm = document.querySelector('.add-to-cart-form');
+        addToCartForm.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent default form submission
+            
+            try {
+                // Send AJAX request to add item to cart
+                const formData = new FormData(addToCartForm);
+                const response = await fetch(addToCartForm.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                    body: formData,
+                });
+                
+                if (response.ok) {
+                    // Display SweetAlert pop-up notification
+                    await Swal.fire({
+                        icon: 'success',
+                        title: 'Item Added to Cart',
+                        text: 'The item has been added to your cart.',
+                    });
+                } else {
+                    console.error('Error adding item to cart:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error adding item to cart:', error);
+            }
         });
     </script>
     {% endblock %}
