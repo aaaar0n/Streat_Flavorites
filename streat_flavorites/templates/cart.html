@@ -42,7 +42,7 @@
                         <td class="item-price">${{ item.item.price }}</td>
                         <td></td> <!-- Empty column for spacing -->
                         <td class="item-quantity">
-                            <form method="post" action="{% url 'adjust_cart' item.id %}">
+                            <form method="post" action="{% url 'adjust_cart' item.id %}" class="adjust-quantity-form">
                                 {% csrf_token %}
                                 <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="{{ item.item.stocks }}">
                                 <button type="submit" class="adjust-quantity-button">Adjust</button>
@@ -69,4 +69,44 @@
         <a href="{% url 'checkout' %}" class="action-button">Proceed to Checkout</a><br><br>
         <a href="{% url 'index' %}" class="action-button">Continue Shopping</a>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <script>
+        // Attach submit event listeners to "Adjust Quantity" forms
+        const adjustQuantityForms = document.querySelectorAll('.adjust-quantity-form');
+        adjustQuantityForms.forEach(form => {
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault(); // Prevent default form submission
+                
+                try {
+                    // Send AJAX request to adjust item quantity
+                    const formData = new FormData(form);
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': '{{ csrf_token }}',
+                        },
+                        body: formData,
+                    });
+                    
+                    if (response.ok) {
+                        // Display SweetAlert pop-up notification
+                        await Swal.fire({
+                            icon: 'success',
+                            title: 'Quantity Adjusted',
+                            text: 'The quantity of the item has been adjusted.',
+                        }).then(() => {
+                            location.reload(); // Reload the page after user clicks "OK"
+                        });
+                    } else {
+                        console.error('Error adjusting quantity:', response.statusText);
+                    }
+                } catch (error) {
+                    console.error('Error adjusting quantity:', error);
+                }
+            });
+        });
+    </script>
+    
+    
 {% endblock %}
