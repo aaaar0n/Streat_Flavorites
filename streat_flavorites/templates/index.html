@@ -8,7 +8,13 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/index_styles.css' %}">
 
 <div class="banner-container">
-    <img src="{% static 'banner2.jpg' %}" alt="Banner Image" class="banner-image">
+        {% for banner in banners %}
+            <div class="banner-item">
+                <img src="{{ banner.image.url }}" alt="{{ banner.title }}" class="banner-image">
+                <!-- <h2>{{ banner.title }}</h2> 
+                 <p>{{ banner.description }}</p> -->
+            </div>
+        {% endfor %}
 </div>
 
 <h1>Welcome to StrEAT Flavorites Mini-Online Store</h1>

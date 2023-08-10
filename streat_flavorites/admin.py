@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Subcategory, Item
+from .models import Category, Subcategory, Item, Banner
 from .forms import ItemForm
 
 class ItemAdmin(admin.ModelAdmin):
@@ -11,6 +11,10 @@ class ItemAdmin(admin.ModelAdmin):
     def get_category(self, obj):
         return obj.subcategory.category.name if obj.subcategory else '-'
     get_category.short_description = 'Category'
+
+@admin.register(Banner)
+class BannerAdmin(admin.ModelAdmin):
+    list_display = ('title', 'description')
 
 class SubcategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'category')  # Add 'category' to the list_display

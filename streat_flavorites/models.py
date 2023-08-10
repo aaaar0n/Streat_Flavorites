@@ -36,3 +36,8 @@ class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     item = models.ForeignKey('Item', on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
+
+class Banner(models.Model):
+    image = models.ImageField(upload_to='banners/')
+    title = models.CharField(max_length=100)
+    description = models.TextField()

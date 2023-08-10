@@ -48,3 +48,23 @@
     width: calc(32% - 10px);
     text-align: center;
 }
+
+/* Center the banner image horizontally and vertically */
+.banner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Adjust the height as needed */
+    background-color: #f7f7f7;
+}
+
+.banner-item {
+    text-align: center;
+}
+
+.banner-image {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    margin: 0 auto;
+}
