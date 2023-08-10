@@ -6,62 +6,64 @@
 
 {% block content %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/index_styles.css' %}">
-    <div class="banner-container">
-        <img src="{% static 'banner2.jpg' %}" alt="Banner Image" class="banner-image">
-    </div>
-    <br>
-    <h1>Welcome to StrEAT Flavorites Mini-Online Store</h1>
-    <div class="category-container">
-        <div class="category">
-            <h2>Most Liked Items</h2>
-            <div class="item-container">
-                {% for item in top_liked_items %}
-                    <div class="item-box">
-                        {% if item.photo %}
-                            <a href="{% url 'item_detail' item.id %}">
-                                <img src="{{ item.photo.url }}" alt="{{ item.name }} Photo" class="item-image">
-                            </a>
-                                {% endif %}
-                            <h2><a href="{% url 'item_detail' item.id %}" class="item-name">{{ item.name }}</a></h2>
-                            <p class="item-description">{{ item.description }}</p>
-                            <p class="item-price">${{ item.price }}</p>
-                            <p class="item-stock">Stocks: {{ item.stocks }}</p>
-                        </div>
-                {% endfor %}
-            </div>
+
+<div class="banner-container">
+    <img src="{% static 'banner2.jpg' %}" alt="Banner Image" class="banner-image">
+</div>
+
+<h1>Welcome to StrEAT Flavorites Mini-Online Store</h1>
+
+<div class="category-container">
+    <div class="category">
+        <h2>Most Liked Items</h2>
+        <div class="item-container">
+            {% for item in top_liked_items %}
+                <div class="item-box">
+                    {% if item.photo %}
+                        <a href="{% url 'item_detail' item.id %}">
+                            <img src="{{ item.photo.url }}" alt="{{ item.name }} Photo" class="item-image">
+                        </a>
+                    {% endif %}
+                    <h2><a href="{% url 'item_detail' item.id %}" class="item-name">{{ item.name }}</a></h2>
+                    <p class="item-description">{{ item.description }}</p>
+                    <p class="item-price">${{ item.price }}</p>
+                    <p class="item-stock">Stocks: {{ item.stocks }}</p>
+                </div>
+            {% endfor %}
         </div>
     </div>
-    <div class="category-container">
-        {% for category in categories %}
-            <div class="category">
-                <h2><a href="{% url 'category_detail' category.id %}">{{ category.name }} </a></h2>
-                <ul class="subcategory-list">
-                    {% for subcategory in category.subcategory_set.all %}
-                        <div class="subcategory">
-                            <a href="{% url 'subcategory_detail' subcategory.id %}" class="subcategory-link">{{ subcategory.name }}</a>
-                            <ul class="item-list">
-                                <div class="item-container">
-                                    {% for item in subcategory.item_set.all|slice:":6" %}
-                                        <div class="item-box">
-                                            {% if item.photo %}
-                                                <a href="{% url 'item_detail' item.id %}">
-                                                    <img src="{{ item.photo.url }}" alt="{{ item.name }} Photo" class="item-image">
-                                                </a>
-                                            {% endif %}
-                                            <h2><a href="{% url 'item_detail' item.id %}" class="item-name">{{ item.name }}</a></h2>
-                                            <p class="item-description">{{ item.description }}</p>
-                                            <p class="item-price">${{ item.price }}</p>
-                                            <p class="item-stock">Stocks: {{ item.stocks }}</p>
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                            </ul>
-                        </div>
-                    {% endfor %}
+</div>
 
-                </ul>
-            </div>
-        {% endfor %}
-    </div>
+<div class="category-container">
+    {% for category in categories %}
+        <div class="category">
+            <h2><a href="{% url 'category_detail' category.id %}">{{ category.name }} </a></h2>
+            <ul class="subcategory-list">
+                {% for subcategory in category.subcategory_set.all %}
+                    <div class="subcategory">
+                        <a href="{% url 'subcategory_detail' subcategory.id %}" class="subcategory-link">{{ subcategory.name }}</a>
+                        <ul class="item-list">
+                            <div class="item-container">
+                                {% for item in subcategory.item_set.all|slice:":6" %}
+                                    <div class="item-box">
+                                        {% if item.photo %}
+                                            <a href="{% url 'item_detail' item.id %}">
+                                                <img src="{{ item.photo.url }}" alt="{{ item.name }} Photo" class="item-image">
+                                            </a>
+                                        {% endif %}
+                                        <h2><a href="{% url 'item_detail' item.id %}" class="item-name">{{ item.name }}</a></h2>
+                                        <p class="item-description">{{ item.description }}</p>
+                                        <p class="item-price">${{ item.price }}</p>
+                                        <p class="item-stock">Stocks: {{ item.stocks }}</p>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </ul>
+                    </div>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+</div>
 
 {% endblock %}

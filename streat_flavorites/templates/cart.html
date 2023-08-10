@@ -6,23 +6,18 @@
 
 {% block content %}
     <link rel="stylesheet" href="{% static 'css/cart_styles.css' %}">
-    <h1>Your Cart</h1>
-    
+
+    <h1>Your Cart</h1><br>
     {% if cart_items %}
         <table class="cart-table">
             <thead>
                 <tr>
                     <th>Item</th>
-                    <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th> <!-- Empty column for spacing -->
-                    <th>Product</th>
-                    <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th> <!-- Empty column for spacing -->
+                    <th width="300px">Product</th>
                     <th>Price</th>
-                    <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th> <!-- Empty column for spacing -->
                     <th>Quantity</th>
-                    <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th> <!-- Empty column for spacing -->
                     <th>Total</th>
-                    <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th> <!-- Empty column for spacing -->
-                    <th></th>
+                    <th>Command</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,14 +28,10 @@
                                 <img src="{{ item.item.photo.url }}" alt="{{ item.item.name }} Photo" style="max-width: 50px; max-height: 50px;">
                             {% endif %}
                         </td>
-                        <td></td> <!-- Empty column for spacing -->
                         <td class="item-description">
-                            <h2><a href="{% url 'item_detail' item.id %}">{{ item.item.name }}</a></h2>
-                            <p>{{ item.item.description }}</p>
+                            <h><a href="{% url 'item_detail' item.id %}">{{ item.item.name }}</a></h>
                         </td>
-                        <td></td> <!-- Empty column for spacing -->
                         <td class="item-price">${{ item.item.price }}</td>
-                        <td></td> <!-- Empty column for spacing -->
                         <td class="item-quantity">
                             <form method="post" action="{% url 'adjust_cart' item.id %}" class="adjust-quantity-form">
                                 {% csrf_token %}
@@ -48,17 +39,14 @@
                                 <button type="submit" class="adjust-quantity-button">Adjust</button>
                             </form>
                         </td>
-                        <td></td> <!-- Empty column for spacing -->
                         <td class="item-total">${{ item.total }}</td>
-                        <td></td> <!-- Empty column for spacing -->
                         <td class="item-remove">
                             <a href="{% url 'remove_from_cart' item.id %}">Remove</a>
                         </td>
-                        <td></td> <!-- Empty column for spacing -->
                     </tr>
                 {% endfor %}
             </tbody>
-        </table>
+        </table><br>
         <p class="sub-total">Sub Total: ${{ total_price }}</p>
         <p class="sub-total">Estimated Total Weight: {{ total_weight }} grams</p>
     {% else %}
@@ -69,6 +57,29 @@
         <a href="{% url 'checkout' %}" class="action-button">Proceed to Checkout</a><br><br>
         <a href="{% url 'index' %}" class="action-button">Continue Shopping</a>
     </div>
+    <div class="container">
+        <div class="recommended-items">
+            <h2>Recommended Items</h2>
+            <div class="item-list">
+                {% for item in recommended_items %}
+                    <div class="item-container">
+                        <div class="item-box">
+                            {% if item.photo %}
+                                <a href="{% url 'item_detail' item.id %}">
+                                    <img src="{{ item.photo.url }}" alt="{{ item.name }} Photo" class="item-image">
+                                </a>
+                            {% endif %}
+                            <h2><a href="{% url 'item_detail' item.id %}" class="item-name">{{ item.name }}</a></h2>
+                            <p class="item-description">{{ item.description }}</p>
+                            <p class="item-price">${{ item.price }}</p>
+                            <p class="item-stock">Stocks: {{ item.stocks }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <script>
@@ -76,10 +87,9 @@
         const adjustQuantityForms = document.querySelectorAll('.adjust-quantity-form');
         adjustQuantityForms.forEach(form => {
             form.addEventListener('submit', async (event) => {
-                event.preventDefault(); // Prevent default form submission
+                event.preventDefault();
                 
                 try {
-                    // Send AJAX request to adjust item quantity
                     const formData = new FormData(form);
                     const response = await fetch(form.action, {
                         method: 'POST',
@@ -90,13 +100,12 @@
                     });
                     
                     if (response.ok) {
-                        // Display SweetAlert pop-up notification
                         await Swal.fire({
                             icon: 'success',
                             title: 'Quantity Adjusted',
                             text: 'The quantity of the item has been adjusted.',
                         }).then(() => {
-                            location.reload(); // Reload the page after user clicks "OK"
+                            location.reload();
                         });
                     } else {
                         console.error('Error adjusting quantity:', response.statusText);
@@ -107,6 +116,4 @@
             });
         });
     </script>
-    
-    
 {% endblock %}

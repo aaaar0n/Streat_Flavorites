@@ -1,226 +1,169 @@
-    
-    
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f0f0f0; /* Set background color for the body */
-    }
+/* Reset and base styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
 
-    .container {
-        max-width: 1500px; /* Adjust the maximum width as needed */
-        margin: 0 auto; /* Center the container horizontally */
-        padding: 20px; /* Add padding for spacing */
-    }
+.container {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 20px;
+}
 
-    .header {
-        background-color: #FFA351;
-        color: white;
-        text-align: center;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        position: sticky;
-        padding: 5px 0; /* Adjust padding to control header size */
-        height: auto; /* Adjust height as needed */
-        line-height: 0; /* Vertically center text */
-    }
-    .header-logo {
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-    }
-    .header-logo img {
-        max-width: 250px;
-        max-height: 250px;
-        margin-right: 10px;
-        
-    }
+/* Header styles */
+.header {
+    background-color: #FFA351;
+    color: white;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    padding: 5px 0;
+    height: auto;
+    line-height: 0;
+}
 
-    .header h1 {
-        margin: 0;
-        padding: 10px 0;
-    }
+.header-logo {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
 
-    .search-form {
-        display: flex;
-        align-items: center;
-        padding: 10px; /* Adjust padding as needed */
-        border-radius: 20px; /* Add rounded edges */
-        background-color: #fff; /* Set background color for search bar */
-    }
+.header-logo img {
+    max-width: 250px;
+    max-height: 250px;
+    margin-right: 10px;
+}
 
-    .search-input {
-        width: 200px; /* Adjust width as needed */
-        padding: 8px; /* Adjust padding as needed */
-        border: none;
-        border-radius: 20px; /* Add rounded edges */
-    }
+.search-form {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: #fff;
+}
 
-    .search-button {
-        padding: 10px 20px; /* Adjust padding as needed */
-        border: none;
-        border-radius: 20px; /* Add rounded edges */
-        background-color: #FFA351;
-        color: white;
-        cursor: pointer;
-    }
+.search-input {
+    width: 200px;
+    padding: 8px;
+    border: none;
+    border-radius: 20px;
+}
 
-    .cart-link {
-        display: flex;
-        align-items: center;
-    }
+.search-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background-color: #FFA351;
+    color: white;
+    cursor: pointer;
+}
 
-    .cart-image {
-        width: 100px; /* Adjust the width as needed */
-        height: auto; /* Maintain aspect ratio */
-        margin-left: 10px; /* Add spacing between logo and cart image */
-        margin-right: 20px; /* Adjust the right margin for positioning */
-    }
+.cart-link {
+    display: flex;
+    align-items: center;
+}
 
-    .subheader {
-        background-color: #FBE27A;
-        text-align: center;
-        padding: 15px;
-        width: 100%;
-        z-index: 1000; /* Ensure the subheader is above other elements */
-        transition: background-color 0.3s ease; /* Add smooth transition */
-        position: relative; /* Required for sticky behavior */
+.cart-image {
+    width: 100px;
+    height: auto;
+    margin-left: 10px;
+    margin-right: 20px;
+}
 
-    }
+/* Subheader styles */
+.subheader {
+    background-color: #FBE27A;
+    text-align: center;
+    padding: 15px;
+    width: 100%;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
+    position: relative;
+}
 
-    .subheader.sticky {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add shadow */
-    }
+.subheader.sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-    .subheader a {
-        color: black;
-        font-weight: bold;
-        text-decoration: none;
-        margin: 0 5px;
-        border-bottom: 1px solid transparent; /* Hide border by default */
-        padding-bottom: 4px; /* Optional: Add padding for spacing */
-        border-right: 0px solid #FFA351; /* Add a thin vertical line */
-        padding-right: 10px; /* Add some spacing to the right of each category */
-        font-size: 24px;
-    }
+.subheader a {
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+    margin: 0 5px;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 4px;
+    border-right: 0px solid #FFA351;
+    padding-right: 10px;
+    font-size: 24px;
+}
 
-    .subheader a:hover {
-        border-bottom: 1px solid #00000000; /* Show border on hover */
-        background-color: #f8d300; /* Change background color on hover */
-        border-radius: 10px; /* Add rounded edge on hover */
-    }
+.subheader a:hover {
+    border-bottom: 1px solid #00000000;
+    background-color: #f8d300;
+    border-radius: 10px;
+}
 
-    .category-container {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
+/* Other styles */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
 
-    .category {
-        background-color: #f8d30000;
-        padding: 15px;
-        border-radius: 10px;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    }
+.category-dropdown {
+    color: black;
+    text-decoration: none;
+    margin: 0 10px;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 4px;
+    cursor: pointer;
+}
 
-   
-    .subcategory-link {
-        font-size: 32px; /* Adjust the font size as needed */
-        font-weight: bold; /* Add bold font weight */
-    }
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #fff2c0;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+}
 
-    a {
-    text-decoration: none; /* Remove underline */
-    /* Additional styling if needed */
-    }
+.dropdown:hover .dropdown-content {
+    display: block;
+}
 
-    .banner-container {
-        width: 100%;
-        max-width: 1400px; /* Adjust the max width as needed */
-        margin: 0 auto;
-        padding: 20px; /* Add space on the sides */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-bottom: 1px solid #ccc; /* Add a 1px solid border at the bottom */
-    }
+.floating-cart-button,
+.floating-search-bar {
+    position: fixed;
+    z-index: 1000;
+}
 
-    .banner-image {
-        max-width: 100%;
-        height: auto;
-    }
+.cart-image-float {
+    width: 100px;
+    height: auto;
+    display: block;
+}
 
-    .dropdown {
-        position: relative;
-        display: inline-block;
-    }
+.floating-search-form {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: #FBE27A;
+}
 
-    .category-dropdown {
-        color: black;
-        text-decoration: none;
-        margin: 0 10px;
-        border-bottom: 1px solid transparent;
-        padding-bottom: 4px;
-        cursor: pointer;
-    }
-
-    .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: #fff2c0;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-        z-index: 1;
-        border-radius: 5px;
-        padding: 10px;
-        font-size: 16px; /* Adjust the font size as needed */
-    }
-
-    .dropdown:hover .dropdown-content {
-        display: block;
-    }
-
-    .floating-cart-button {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        z-index: 1000;
-    }
-    
-    .cart-image-float {
-        width: 100px; /* Adjust the width as needed */
-        height: auto; /* Maintain aspect ratio */
-        display: block;
-    }
-
-    .floating-search-bar {
-        display: none;
-        position: fixed;
-        top: 60px;
-        left: 20px;
-        z-index: 1000;
-    }
-
-    .floating-search-form {
-        display: flex;
-        align-items: center;
-        padding: 10px; /* Adjust padding as needed */
-        border-radius: 20px; /* Add rounded edges */
-        background-color: #FBE27A; /* Set background color for search bar */
-    }
-
-    .floating-search-input {
-        width: 150px; /* Adjust width as needed */
-        padding: 8px; /* Adjust padding as needed */
-        border: none;
-        border-radius: 20px; /* Add rounded edges */
-    }
-
-    
-    
-    
-    
+.floating-search-input {
+    width: 150px;
+    padding: 8px;
+    border: none;
+    border-radius: 20px;
+}

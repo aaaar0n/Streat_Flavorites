@@ -5,8 +5,8 @@
 {% block title %}Home - Your Online Store{% endblock %}
 
 {% block content %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/item_details_styles.css' %}">
-
+    <link rel="stylesheet" type="text/css" href="{% static 'css/item_details_styles.css' %}">
+    
     <div class="container">
         <div class="item-directory">
             <a href="{% url 'index' %}">Home</a> &raquo;
@@ -16,7 +16,7 @@
         <br>
         <div class="item-details">
             <div class="item-image-container">
-                <img src="{{ item.photo.url }}" alt="{{ item.name }} Photo" style="max-width: 300px; max-height: 300px;">
+                <img src="{{ item.photo.url }}" alt="{{ item.name }} Photo" class="item-image">
             </div>
             <div class="item-info">
                 <h2>{{ item.name }}</h2>
@@ -27,7 +27,8 @@
                     <form method="post" action="{% url 'add_to_cart' item.id %}" class="add-to-cart-form">
                         {% csrf_token %}
                         <input type="hidden" name="item_id" value="{{ item.id }}">
-                        Quantity: <input type="number" name="quantity" value="1" min="1" max="{{ item.stocks }}">
+                        <label for="quantity">Quantity:</label>
+                        <input type="number" name="quantity" id="quantity" value="1" min="1" max="{{ item.stocks }}">
                         <button type="submit" class="add-to-cart-button">Add to Cart</button>
                     </form>
                 </div>
@@ -79,13 +80,11 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <script>
-        // Attach submit event listener to "Add to Cart" form
         const addToCartForm = document.querySelector('.add-to-cart-form');
         addToCartForm.addEventListener('submit', async (event) => {
-            event.preventDefault(); // Prevent default form submission
+            event.preventDefault();
             
             try {
-                // Send AJAX request to add item to cart
                 const formData = new FormData(addToCartForm);
                 const response = await fetch(addToCartForm.action, {
                     method: 'POST',
@@ -96,7 +95,6 @@
                 });
                 
                 if (response.ok) {
-                    // Display SweetAlert pop-up notification
                     await Swal.fire({
                         icon: 'success',
                         title: 'Item Added to Cart',
@@ -110,4 +108,4 @@
             }
         });
     </script>
-    {% endblock %}
+{% endblock %}

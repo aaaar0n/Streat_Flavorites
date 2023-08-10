@@ -1,19 +1,113 @@
-    .adjust-quantity-button {
-        background-color: #FFA351; /* Same color as the header */
-        color: rgb(0, 0, 0); /* Text color */
-        border: none;
-        padding: 5px 10px;
-        border-radius: 5px;
-        cursor: pointer;
-    }
+/* Add this CSS to cart_styles.css */
 
-    .action-button {
-        background-color: #FFA351; /* Same color as the header */
-        color: white; /* Text color */
-        border: none;
-        padding: 5px 10px;
-        border-radius: 5px;
-        cursor: pointer;
-        text-decoration: none; /* Remove default underline for links */
-        margin-right: 10px; /* Add some spacing between buttons */
-    }
+.action-button {
+    background-color: #FFA351; /* Same color as the header */
+    color: white; /* Text color */
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none; /* Remove default underline for links */
+    margin-right: 10px; /* Add some spacing between buttons */
+}
+
+/* Cart Table */
+.cart-table {
+    width: 60%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.cart-table th,
+.cart-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.cart-table th {
+    background-color: #f8f8f8;
+}
+
+.cart-item {
+    vertical-align: middle;
+}
+
+.item-image img {
+    max-width: 50px;
+    max-height: 50px;
+}
+
+.item-description h {
+    margin: 0;
+}
+
+.item-price,
+.item-quantity,
+.item-total,
+.item-remove {
+    vertical-align: middle;
+    width: 150px;
+}
+
+/* Subtotal and Buttons */
+.sub-total {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.cart-buttons {
+    margin-top: 20px;
+}
+
+/* Adjust Quantity Form */
+.adjust-quantity-form {
+    display: flex;
+    align-items: center;
+}
+
+.adjust-quantity-button {
+    background-color: #FFA351;
+    color: rgb(0, 0, 0);
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px; /* Add spacing between input and button */
+}
+
+/* Recommended Items */
+.recommended-items {
+    margin-top: 20px;
+}
+
+.recommended-items .item-box {
+    border: 4px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 5px;
+    width: calc(19% - 10px);
+    height: auto;
+    text-align: center;
+    display: inline-block;
+    vertical-align: top;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.recommended-items .item-image {
+    max-width: 100%;
+    max-height: 120px;
+    margin-bottom: 10px;
+}
+
+.recommended-items .item-name {
+    margin: 0;
+}
+
+.recommended-items .item-description,
+.recommended-items .item-price,
+.recommended-items .item-stock {
+    margin: 5px 0;
+}

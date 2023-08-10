@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Category, Subcategory, Item
 from .models import Cart, CartItem
+from random import sample
+from django.db.models import Count
 from django.http import JsonResponse
 
 def index(request):
@@ -49,9 +51,10 @@ def cart(request):
 
     total_price = sum(item.item.price * item.quantity for item in cart_items)
     total_weight = sum(item.item.weight * item.quantity for item in cart_items)
+    recommended_items = Item.objects.annotate(num_likes=Count('likes')).order_by('-num_likes')[:6]
     
     categories = Category.objects.all()
-    context_dict = {'cart_items': cart_items, 'total_items': total_items, 'total_price': total_price, 'categories': categories, 'total_weight': total_weight}
+    context_dict = {'cart_items': cart_items, 'total_items': total_items, 'total_price': total_price, 'categories': categories, 'total_weight': total_weight, 'recommended_items': recommended_items,}
 
     return render(request, 'cart.html', context_dict)
 
