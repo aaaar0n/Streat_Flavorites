@@ -49,13 +49,11 @@
     text-align: center;
 }
 
-/* Center the banner image horizontally and vertically */
 .banner-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Adjust the height as needed */
-    background-color: #f7f7f7;
+  
 }
 
 .banner-item {
@@ -67,4 +65,10 @@
     max-height: 100%;
     display: block;
     margin: 0 auto;
+}
+
+.separator-line {
+    border: 1px solid #ddd;
+    margin: 20px auto;
+    width: 90%; /* Adjust the width as needed */
 }
