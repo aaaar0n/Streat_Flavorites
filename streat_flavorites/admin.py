@@ -4,7 +4,7 @@ from .forms import ItemForm
 
 class ItemAdmin(admin.ModelAdmin):
     form = ItemForm
-    list_display = ('name', 'description', 'price', 'subcategory', 'get_category')
+    list_display = ('name', 'description', 'price', 'subcategory', 'get_category', 'id')
     list_filter = ('subcategory__category', 'subcategory')
     search_fields = ('name', 'subcategory__name', 'subcategory__category__name')
 

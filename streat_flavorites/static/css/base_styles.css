@@ -4,10 +4,12 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f0f0f0;
+    width: 100%;
 }
 
 .container {
     max-width: 1500px;
+    width: 100%;
     margin: 0 auto;
     padding: 20px;
 }
@@ -178,7 +180,7 @@ a {
 }
 
 a:hover {
-    color: #FFA351; /* Color when hovering */
+    color: #ff0000; /* Color when hovering */
 }
 
 .floating-cart-button {

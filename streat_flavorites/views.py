@@ -55,7 +55,12 @@ def cart(request):
     random_items = Item.objects.order_by('?')[:6]
     
     categories = Category.objects.all()
-    context_dict = {'cart_items': cart_items, 'total_items': total_items, 'total_price': total_price, 'categories': categories, 'total_weight': total_weight, 'random_items': random_items}
+    context_dict = {'cart_items': cart_items, 
+                    'total_items': total_items, 
+                    'total_price': total_price, 
+                    'categories': categories, 
+                    'total_weight': total_weight, 
+                    'random_items': random_items}
 
     return render(request, 'cart.html', context_dict)
 
