@@ -1,0 +1,19 @@
+    .adjust-quantity-button {
+        background-color: #FFA351; /* Same color as the header */
+        color: rgb(0, 0, 0); /* Text color */
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .action-button {
+        background-color: #FFA351; /* Same color as the header */
+        color: white; /* Text color */
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none; /* Remove default underline for links */
+        margin-right: 10px; /* Add some spacing between buttons */
+    }

@@ -31,21 +31,28 @@ def item_detail(request, item_id):
     item = get_object_or_404(Item, pk=item_id)
     categories = Category.objects.all()
     recommended_items = Item.objects.filter(subcategory=item.subcategory).exclude(id=item_id).order_by('?')[:5]
-    context_dict = {'item': item, 'categories': categories, 'recommended_items': recommended_items,}
+    context_dict = {'item': item, 'categories': categories, 'recommended_items': recommended_items}
 
     return render(request, 'item_detail.html', context_dict)
 
 def cart(request):
-    user_cart, created = Cart.objects.get_or_create(user=request.user)
+    user_cart, _ = Cart.objects.get_or_create(user=request.user)
     cart_items = user_cart.cartitem_set.all()
     
     total_items = sum(item.quantity for item in cart_items)
     
-    # Calculate total price
+    # Calculate total price and total for each item
+    total_price = 0
+    for item in cart_items:
+        item.total = item.item.price * item.quantity
+        total_price += item.total
+
     total_price = sum(item.item.price * item.quantity for item in cart_items)
-    categories = Category.objects.all()
-    context_dict = {'cart_items': cart_items, 'total_items': total_items, 'total_price': total_price, 'categories': categories}
+    total_weight = sum(item.item.weight * item.quantity for item in cart_items)
     
+    categories = Category.objects.all()
+    context_dict = {'cart_items': cart_items, 'total_items': total_items, 'total_price': total_price, 'categories': categories, 'total_weight': total_weight}
+
     return render(request, 'cart.html', context_dict)
 
 
@@ -55,18 +62,32 @@ def add_to_cart(request, item_id):
     if request.method == 'POST':
         quantity = int(request.POST.get('quantity', 1))
     else:
-        quantity = 1
+        quantity = 1  # Default to 1 if quantity is not provided in POST data
 
     # Get or create the user's cart
-    user_cart, created = Cart.objects.get_or_create(user=request.user)  # Assuming you have authentication
+    user_cart, _ = Cart.objects.get_or_create(user=request.user)  # Using "_" to indicate that "created" is not used
     
     # Check if the item is already in the cart, increment quantity if so
     cart_item, created = CartItem.objects.get_or_create(cart=user_cart, item=item)
     if not created:
         cart_item.quantity += quantity
-        cart_item.save()
+    else:
+        cart_item.quantity = quantity  # Set the initial quantity if the item was just created
+    cart_item.save()
     
     return redirect('cart')  # Redirect to the cart page
+
+def adjust_cart(request, item_id):
+    cart_item = get_object_or_404(CartItem, pk=item_id)
+    
+    if request.method == 'POST':
+        quantity = int(request.POST.get('quantity', 1))
+        
+        if quantity > 0 and quantity <= cart_item.item.stocks:
+            cart_item.quantity = quantity
+            cart_item.save()
+    
+    return redirect('cart')
 
 def remove_from_cart(request, item_id):
     cart_item = get_object_or_404(CartItem, pk=item_id)

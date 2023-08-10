@@ -25,10 +25,12 @@
                 <div class="quantity-adjustment">
                     <form method="post" action="{% url 'add_to_cart' item.id %}">
                         {% csrf_token %}
+                        <input type="hidden" name="item_id" value="{{ item.id }}">
                         Quantity: <input type="number" name="quantity" value="1" min="1" max="{{ item.stocks }}">
                         <button type="submit" class="add-to-cart-button">Add to Cart</button>
                     </form>
                 </div>
+                
                 <div class="like-section">
                     <button id="like-button" data-item-id="{{ item.id }}" class="like-button">Like</button>
                     <p>Likes: <span id="like-count">{{ item.likes }}</span></p>
