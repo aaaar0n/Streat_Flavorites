@@ -21,27 +21,27 @@
                 </tr>
             </thead>
             <tbody>
-                {% for item in cart_items %}
+                {% for cart_item in cart_items %}
                     <tr class="cart-item">
                         <td class="item-image">
-                            {% if item.item.photo %}
-                                <img src="{{ item.item.photo.url }}" alt="{{ item.item.name }} Photo" style="max-width: 50px; max-height: 50px;">
+                            {% if cart_item.item.photo %}
+                                <img src="{{ cart_item.item.photo.url }}" alt="{{ cart_item.item.name }} Photo" style="max-width: 50px; max-height: 50px;">
                             {% endif %}
                         </td>
                         <td class="item-description">
-                            <h><a href="{% url 'item_detail' item.id %}">{{ item.item.name }}</a></h>
+                            <h><a href="{% url 'item_detail' cart_item.item.id %}">{{ cart_item.item.name }}</a></h>
                         </td>
-                        <td class="item-price">${{ item.item.price }}</td>
+                        <td class="item-price">${{ cart_item.item.price }}</td>
                         <td class="item-quantity">
-                            <form method="post" action="{% url 'adjust_cart' item.id %}" class="adjust-quantity-form">
+                            <form method="post" action="{% url 'adjust_cart' cart_item.item.id %}" class="adjust-quantity-form">
                                 {% csrf_token %}
-                                <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="{{ item.item.stocks }}" style="width: 40px;">
+                                <input type="number" name="quantity" value="{{ cart_item.quantity }}" min="1" max="{{ cart_item.item.stocks }}" style="width: 40px;">
                                 <button type="submit" class="adjust-quantity-button">Adjust</button>
                             </form>
                         </td>
-                        <td class="item-total">${{ item.total }}</td>
+                        <td class="item-total">${{ cart_item.item.price * cart_item.quantity }}</td>
                         <td class="item-remove">
-                            <a href="{% url 'remove_from_cart' item.id %}">Remove</a>
+                            <a href="{% url 'remove_from_cart' cart_item.item.id %}">Remove</a>
                         </td>
                     </tr>
                 {% endfor %}

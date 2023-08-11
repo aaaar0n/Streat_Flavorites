@@ -2,7 +2,6 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Category, Subcategory, Item, Banner
 from .models import Cart, CartItem
 from random import sample
-from django.db.models import Count
 from django.http import JsonResponse
 
 def index(request):
@@ -41,7 +40,7 @@ def item_detail(request, item_id):
 def cart(request):
     user_cart, _ = Cart.objects.get_or_create(user=request.user)
     cart_items = user_cart.cartitem_set.all()
-    
+
     total_items = sum(item.quantity for item in cart_items)
     
     # Calculate total price and total for each item
@@ -66,15 +65,16 @@ def cart(request):
 
 
 def add_to_cart(request, item_id):
+    
     item = get_object_or_404(Item, pk=item_id)
-
+    
     if request.method == 'POST':
         quantity = int(request.POST.get('quantity', 1))
     else:
         quantity = 1  # Default to 1 if quantity is not provided in POST data
 
     # Get or create the user's cart
-    user_cart, _ = Cart.objects.get_or_create(user=request.user)  # Using "_" to indicate that "created" is not used
+    user_cart, created = Cart.objects.get_or_create(user=request.user)  # Using "_" to indicate that "created" is not used
     
     # Check if the item is already in the cart, increment quantity if so
     cart_item, created = CartItem.objects.get_or_create(cart=user_cart, item=item)
@@ -84,6 +84,7 @@ def add_to_cart(request, item_id):
         cart_item.quantity = quantity  # Set the initial quantity if the item was just created
     cart_item.save()
     
+
     return redirect('cart')  # Redirect to the cart page
 
 def adjust_cart(request, item_id):
