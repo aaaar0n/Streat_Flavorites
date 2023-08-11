@@ -44,7 +44,6 @@
                         </a>
                     {% endif %}
                     <h2><a href="{% url 'item_detail' random_item.id %}" class="item-name">{{ random_item.name }}</a></h2>
-                    <p class="item-description">{{ random_item.description }}</p>
                     <p class="item-price">${{ random_item.price }}</p>
                     <p class="item-stock">Stocks: {{ random_item.stocks }}</p>
                 </div>

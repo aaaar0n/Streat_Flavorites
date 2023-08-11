@@ -6,7 +6,7 @@ from django.http import JsonResponse
 from django.core.mail import send_mail
 from .models import CartItem
 from .forms import CheckoutForm
-
+import string
 import random
 
 def index(request):
@@ -56,8 +56,6 @@ def item_detail(request, item_id):
 def cart(request):
     user_cart, _ = Cart.objects.get_or_create(user=request.user)
     cart_items = user_cart.cartitem_set.all()
-
-    total_items = sum(item.quantity for item in cart_items)
     
     # Calculate total price and total for each item
     total_price = 0
@@ -70,15 +68,12 @@ def cart(request):
     
     categories = Category.objects.all()
     context_dict = {'cart_items': cart_items, 
-                    'total_items': total_items, 
                     'total_price': total_price, 
                     'categories': categories, 
                     'total_weight': total_weight, 
                     'random_items': random_items}
 
     return render(request, 'cart.html', context_dict)
-
-
 
 def add_to_cart(request, item_id):
     
@@ -138,14 +133,15 @@ def checkout(request):
     random_items = Item.objects.order_by('?')[:12]
     user_cart, _ = Cart.objects.get_or_create(user=request.user)
     cart_items = user_cart.cartitem_set.all()
-    total_weight = sum(item.item.weight * item.quantity for item in cart_items)  # Calculate total weight
+    
+    total_weight = sum(item.item.weight * item.quantity for item in cart_items)
 
-    # Calculate the total price and item totals
+
     total_price = 0
     for item in cart_items:
-        item.total = item.item.price * item.quantity
+        item.total = item.item.price * item.quantity  # Calculate item total here
         total_price += item.total
-
+        
     if request.method == 'POST':
         form = CheckoutForm(request.POST)
         if form.is_valid():
@@ -153,10 +149,10 @@ def checkout(request):
             order_details = {
                 'user_name': form.cleaned_data['user_name'],
                 'user_email': form.cleaned_data['user_email'],
-                'contact_number': form.cleaned_data['contact_number'],  # Add contact number
+                'contact_number': form.cleaned_data['contact_number'],
                 'delivery_address': form.cleaned_data['delivery_address'],
                 'total_price': total_price,
-                'total_weight': total_weight,  # Add total weight
+                'total_weight': total_weight,
                 'cart_items': cart_items,
             }
             
@@ -164,34 +160,54 @@ def checkout(request):
             send_order_email(order_details)
             
             # Clear the cart or mark items as purchased
-            # Clearing the cart:
             user_cart.cartitem_set.all().delete()
-            # OR
-            # Mark items as purchased:
-            # cart_items.update(purchased=True)
             
-            # Redirect to a thank you page or other appropriate page
+            # Redirect to the thank you page
             return redirect('thank_you')  # Replace with your desired URL
             
     else:
         form = CheckoutForm()
     
     context = {'form': form, 'cart_items': cart_items, 'total_price': total_price, 'total_weight': total_weight, 'categories': categories, 'random_items': random_items}
-    
     return render(request, 'checkout.html', context)
 
 def send_order_email(order_details):
-    subject = 'Order Details'
-    message = f"Order Details:\n\nUser: {order_details['user_name']}\nEmail: {order_details['user_email']}\nAddress: {order_details['delivery_address']}\n\nItems:\n"
-    for item in order_details['cart_items']:
-        message += f"{item.item.name} - Quantity: {item.quantity} - Price: ${item.item.price}\n"
-    message += f"\nTotal Price: ${order_details['total_price']}"
-    from_email = 'your@example.com'  # Replace with your email
-    recipient_list = ['order@example.com']  # Replace with the recipient email address
-    send_mail(subject, message, from_email, recipient_list)
+    reference_code = generate_unique_code()
+    subject_admin = f'New Order - REF-ID: {reference_code}'
+    message_admin = f'You have received a new order:\n\n' \
+              f'Name: {order_details["user_name"]}\n' \
+              f'Email: {order_details["user_email"]}\n' \
+              f'Contact Number: {order_details["contact_number"]}\n' \
+              f'Delivery Address: {order_details["delivery_address"]}\n' \
+              f'Total Price: ${order_details["total_price"]}\n' \
+              f'Estimated Weight: {order_details["total_weight"]} g\n\n' \
+              f'Order Items:\n'
+    
+    subject_buyer = f'Order Request Successful - REF-ID: {reference_code}'
+    message_buyer = f'Here is the summary of your order:\n\n' \
+              f'Name: {order_details["user_name"]}\n' \
+              f'Email: {order_details["user_email"]}\n' \
+              f'Contact Number: {order_details["contact_number"]}\n' \
+              f'Delivery Address: {order_details["delivery_address"]}\n' \
+              f'Total Price: ${order_details["total_price"]}\n' \
+              f'Estimated Weight: {order_details["total_weight"]} g\n\n' \
+              f'Order Items:\n'
+    
+    for item in order_details["cart_items"]:
+        message_admin += f'{item.quantity}x {item.item.name} - ${item.total}\n'
+        
+    message_buyer = message_admin
 
+    admin_email = 'sflavorites.host@gmail.com'  # Change this to your email address
+    send_mail(subject_admin, message_admin, 'autoreply.sflavorites@gmail.com', [admin_email])
+    send_mail(subject_buyer, message_buyer, 'autoreply.sflavorites@gmail.com', [order_details["user_email"]]) 
+    
+    
 def order_confirmation(request):
     return render(request, 'order_confirmation.html')
+
+def thank_you(request):
+    return render(request, 'thank_you.html')
 
 def like_item(request, item_id):
     item = get_object_or_404(Item, pk=item_id)
@@ -199,3 +215,8 @@ def like_item(request, item_id):
     item.save()
 
     return JsonResponse({'likes': item.likes})
+
+def generate_unique_code():
+    characters = string.ascii_letters + string.digits
+    code = ''.join(random.choice(characters) for _ in range(10))
+    return code

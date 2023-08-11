@@ -20,7 +20,6 @@
             </div>
             <div class="item-info">
                 <h2>{{ item.name }}</h2>
-                <p class="item-description">{{ item.description }}</p>
                 <p class="item-price">Price: ${{ item.price }}</p>
                 <p class="item-stock">Stocks: {{ item.stocks }}</p>
                 <div class="quantity-adjustment">
@@ -57,7 +56,6 @@
                             </a>
                         {% endif %}
                         <h2><a href="{% url 'item_detail' recommended_item.id %}" class="item-name">{{ recommended_item.name }}</a></h2>
-                        <p class="item-description">{{ recommended_item.description }}</p>
                         <p class="item-price">${{ recommended_item.price }}</p>
                         <p class="item-stock">Stocks: {{ recommended_item.stocks }}</p>
                     </div>

@@ -36,6 +36,8 @@
             </li>
         {% endfor %}
     </ul>
+
+    
     <p>Total Price: ${{ total_price }}</p>
     <p>Total Weight: {{ total_weight }}g</p>
 
@@ -52,8 +54,7 @@
                                 </a>
                             {% endif %}
                             <h2><a href="{% url 'item_detail' item.id %}" class="item-name">{{ item.name }}</a></h2>
-                            <p class="item-description">{{ item.description }}</p>
-                            <p class="item-price">${{ item.price }}</p>
+                            <p class="item-price">${{ item.price }}</p>x
                             <p class="item-stock">Stocks: {{ item.stocks }}</p>
                         </div>
                     </div>

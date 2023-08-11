@@ -21,6 +21,11 @@
                 </tr>
             </thead>
             <tbody>
+
+
+
+
+
                 {% for cart_item in cart_items %}
                     <tr class="cart-item">
                         <td class="item-image">
@@ -49,6 +54,16 @@
                 {% endfor %}
             </tbody>
         </table><br>
+
+
+
+
+
+
+
+
+
+        
         <p class="sub-total">Sub Total: ${{ total_price }}</p>
         <p class="sub-total">Estimated Total Weight: {{ total_weight }} grams</p>
     {% else %}
@@ -77,7 +92,6 @@
                                 </a>
                             {% endif %}
                             <h2><a href="{% url 'item_detail' item.id %}" class="item-name">{{ item.name }}</a></h2>
-                            <p class="item-description">{{ item.description }}</p>
                             <p class="item-price">${{ item.price }}</p>
                             <p class="item-stock">Stocks: {{ item.stocks }}</p>
                         </div>
