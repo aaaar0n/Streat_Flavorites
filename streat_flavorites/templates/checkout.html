@@ -7,40 +7,47 @@
 {% block content %}
     <link rel="stylesheet" href="{% static 'css/checkout.css' %}">
     <link rel="stylesheet" href="{% static 'css/cart_styles.css' %}">
-
     
-    <h2>Checkout</h2>
-    <form method="post">
-        {% csrf_token %}
-        
-        <label for="{{ form.user_name.id_for_label }}" class="form-label">Full Name:</label>
-        {{ form.user_name }}
-        
-        <label for="{{ form.user_email.id_for_label }}" class="form-label">Your Email:</label>
-        {{ form.user_email }}
-        
-        <label for="{{ form.contact_number.id_for_label }}" class="form-label">Contact Number:</label>
-        {{ form.contact_number }}
-        
-        <label for="{{ form.delivery_address.id_for_label }}" class="form-label">Delivery Address:</label>
-        {{ form.delivery_address }}
-        
-        <button type="submit" class="form-submit">Place Order</button>
-    </form>
-    
-    <h3>Order Summary</h3>
-    <ul>
-        {% for item in cart_items %}
-            <li>
-                {{ item.quantity }}x {{ item.item.name }} - ${{ item.total }}
-            </li>
-        {% endfor %}
-    </ul>
+    <div class="checkout-container">
+        <div class="form-container">
+            <h2>Checkout</h2>
+            <form method="post">
+                {% csrf_token %}
+                
+                <label for="{{ form.user_name.id_for_label }}" class="form-label">Full Name:</label>
+                {{ form.user_name }}
+                
+                <label for="{{ form.user_email.id_for_label }}" class="form-label">Your Email:</label>
+                {{ form.user_email }}
+                
+                <label for="{{ form.contact_number.id_for_label }}" class="form-label">Contact Number:</label>
+                {{ form.contact_number }}
+                
+                <label for="{{ form.delivery_address.id_for_label }}" class="form-label">Delivery Address:</label>
+                {{ form.delivery_address }}
+                
+                <button type="submit" class="form-submit">Place Order</button>
+            </form>
+            
+            <h3>Order Summary</h3>
+            <ul>
+                {% for item in cart_items %}
+                    <li>
+                        {{ item.quantity }}x {{ item.item.name }} - ${{ item.total }}
+                    </li>
+                {% endfor %}
+            </ul>
+            
+            <p>Total Price: ${{ total_price }}</p>
+            <p>Total Weight: {{ total_weight }}g</p>
+        </div>
 
+        <div class="announcement-box">
+            <h3>Announcement</h3>
+            <p>{{ announcement|linebreaksbr }}</p>
+        </div>
+    </div>
     
-    <p>Total Price: ${{ total_price }}</p>
-    <p>Total Weight: {{ total_weight }}g</p>
-
     <div class="container">
         <div class="recommended-items">
             <h2>Items that you might like</h2>
@@ -54,7 +61,7 @@
                                 </a>
                             {% endif %}
                             <h2><a href="{% url 'item_detail' item.id %}" class="item-name">{{ item.name }}</a></h2>
-                            <p class="item-price">${{ item.price }}</p>x
+                            <p class="item-price">${{ item.price }}</p>
                             <p class="item-stock">Stocks: {{ item.stocks }}</p>
                         </div>
                     </div>

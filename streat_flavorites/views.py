@@ -133,7 +133,10 @@ def checkout(request):
     random_items = Item.objects.order_by('?')[:12]
     user_cart, _ = Cart.objects.get_or_create(user=request.user)
     cart_items = user_cart.cartitem_set.all()
-    
+    announcement_message = (
+        "This site is currently on its Beta. This means that the site is still under testing and you may encounter some bugs. But don't worry, as for latest testing, the site is working fine and as it should be.\n\n"               
+        "Since this is still a Beta, payment processing will be made through email. Once you placed your order, you will receive an email of the summary of your order. We will revert back to you within 24 hours. The payment options will be discussed on the email. As for now, we only accept bank transfer.\n\n"
+        "For more inquiries, you may contact us on our social media account. We will respond to your message ASAP.")
     total_weight = sum(item.item.weight * item.quantity for item in cart_items)
 
 
@@ -168,7 +171,15 @@ def checkout(request):
     else:
         form = CheckoutForm()
     
-    context = {'form': form, 'cart_items': cart_items, 'total_price': total_price, 'total_weight': total_weight, 'categories': categories, 'random_items': random_items}
+    context = {'form': form, 
+               'cart_items': cart_items, 
+               'total_price': total_price, 
+               'total_weight': total_weight, 
+               'categories': categories, 
+               'random_items': random_items,
+               'announcement': announcement_message,
+               }
+    
     return render(request, 'checkout.html', context)
 
 def send_order_email(order_details):
@@ -207,7 +218,9 @@ def order_confirmation(request):
     return render(request, 'order_confirmation.html')
 
 def thank_you(request):
-    return render(request, 'thank_you.html')
+    categories = Category.objects.all()
+    context_dict = {'categories': categories}
+    return render(request, 'thank_you.html', context_dict)
 
 def like_item(request, item_id):
     item = get_object_or_404(Item, pk=item_id)

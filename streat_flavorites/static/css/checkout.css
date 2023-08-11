@@ -31,4 +31,30 @@
         cursor: pointer;
     }
 
+    .checkout-container {
+        display: flex;
+    }
 
+    .form-container {
+        flex: 1;
+        padding-right: 20px; /* Add some spacing between form and announcement box */
+    }
+
+    .announcement-box {
+        width: 800px; /* Set the width of the announcement box */
+        padding: 30px;
+        background-color: #f7f7f7;
+        border: 1px solid #3f3f3f;
+    }
+
+    .announcement-box h3 {
+        margin: 0;
+        font-size: 24px;
+        color: #333;
+    }
+
+    .announcement-box p {
+        margin: 10px 0;
+        font-size: 18px;
+        color: #666;
+    }
