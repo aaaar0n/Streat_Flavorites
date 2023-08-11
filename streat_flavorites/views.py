@@ -3,6 +3,9 @@ from .models import Category, Subcategory, Item, Banner
 from .models import Cart, CartItem
 from random import sample
 from django.http import JsonResponse
+from django.core.mail import send_mail
+from .models import CartItem
+from .forms import CheckoutForm
 
 import random
 
@@ -59,10 +62,9 @@ def cart(request):
     # Calculate total price and total for each item
     total_price = 0
     for item in cart_items:
-        item.total = item.item.price * item.quantity
+        item.total = item.item.price * item.quantity  # Calculate item total here
         total_price += item.total
 
-    total_price = sum(item.item.price * item.quantity for item in cart_items)
     total_weight = sum(item.item.weight * item.quantity for item in cart_items)
     random_items = Item.objects.order_by('?')[:12]
     
@@ -75,6 +77,7 @@ def cart(request):
                     'random_items': random_items}
 
     return render(request, 'cart.html', context_dict)
+
 
 
 def add_to_cart(request, item_id):
@@ -132,19 +135,60 @@ def search_items(request):
 
 def checkout(request):
     categories = Category.objects.all()
-    if request.method == 'POST':
-        # Process the checkout here (e.g., payment processing)
-        # Once the checkout is successful, clear the user's cart
-        user_cart, created = Cart.objects.get_or_create(user=request.user)
-        user_cart.cartitem_set.all().delete()
-        
-        # Redirect to the order confirmation page or another relevant page
-        return redirect('order_confirmation')  # You can create an 'order_confirmation' URL pattern
-        
-    user_cart, created = Cart.objects.get_or_create(user=request.user)
+    random_items = Item.objects.order_by('?')[:12]
+    user_cart, _ = Cart.objects.get_or_create(user=request.user)
     cart_items = user_cart.cartitem_set.all()
-    context_dict = {'cart_items': cart_items, 'categories': categories}
-    return render(request, 'checkout.html', context_dict)
+    total_weight = sum(item.item.weight * item.quantity for item in cart_items)  # Calculate total weight
+
+    # Calculate the total price and item totals
+    total_price = 0
+    for item in cart_items:
+        item.total = item.item.price * item.quantity
+        total_price += item.total
+
+    if request.method == 'POST':
+        form = CheckoutForm(request.POST)
+        if form.is_valid():
+            # Process the form data and send email
+            order_details = {
+                'user_name': form.cleaned_data['user_name'],
+                'user_email': form.cleaned_data['user_email'],
+                'contact_number': form.cleaned_data['contact_number'],  # Add contact number
+                'delivery_address': form.cleaned_data['delivery_address'],
+                'total_price': total_price,
+                'total_weight': total_weight,  # Add total weight
+                'cart_items': cart_items,
+            }
+            
+            # Send email
+            send_order_email(order_details)
+            
+            # Clear the cart or mark items as purchased
+            # Clearing the cart:
+            user_cart.cartitem_set.all().delete()
+            # OR
+            # Mark items as purchased:
+            # cart_items.update(purchased=True)
+            
+            # Redirect to a thank you page or other appropriate page
+            return redirect('thank_you')  # Replace with your desired URL
+            
+    else:
+        form = CheckoutForm()
+    
+    context = {'form': form, 'cart_items': cart_items, 'total_price': total_price, 'total_weight': total_weight, 'categories': categories, 'random_items': random_items}
+    
+    return render(request, 'checkout.html', context)
+
+def send_order_email(order_details):
+    subject = 'Order Details'
+    message = f"Order Details:\n\nUser: {order_details['user_name']}\nEmail: {order_details['user_email']}\nAddress: {order_details['delivery_address']}\n\nItems:\n"
+    for item in order_details['cart_items']:
+        message += f"{item.item.name} - Quantity: {item.quantity} - Price: ${item.item.price}\n"
+    message += f"\nTotal Price: ${order_details['total_price']}"
+    from_email = 'your@example.com'  # Replace with your email
+    recipient_list = ['order@example.com']  # Replace with the recipient email address
+    send_mail(subject, message, from_email, recipient_list)
 
 def order_confirmation(request):
     return render(request, 'order_confirmation.html')

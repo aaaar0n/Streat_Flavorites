@@ -56,8 +56,10 @@
     {% endif %}
     <br>
     <div class="cart-buttons">
-        <a href="{% url 'checkout' %}" class="action-button">Proceed to Checkout</a><br><br>
-        <a href="{% url 'index' %}" class="action-button">Continue Shopping</a>
+        {% if cart_items %}
+            <a href="{% url 'checkout' %}" class="action-button">Proceed to Checkout</a><br><br>
+        {% endif %}
+            <a href="{% url 'index' %}" class="action-button">Continue Shopping</a>
     </div>
     <br>
     <hr class="separator-line"> 
