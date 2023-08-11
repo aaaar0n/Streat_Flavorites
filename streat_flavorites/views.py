@@ -4,20 +4,32 @@ from .models import Cart, CartItem
 from random import sample
 from django.http import JsonResponse
 
+import random
+
 def index(request):
     categories = Category.objects.all()
     banners = Banner.objects.all()
     top_liked_items = Item.objects.order_by('-likes')[:6]
-    context_dict = {'categories': categories, 'top_liked_items': top_liked_items, 'banners': banners}
+
+    # Get random items for each subcategory
+    subcategory_items = {}
+    for category in categories:
+        for subcategory in category.subcategory_set.all():
+            random_items = list(subcategory.item_set.all().order_by('?')[:6])
+            subcategory_items[subcategory] = random_items
+
+    context_dict = {'categories': categories, 'top_liked_items': top_liked_items, 'banners': banners, 'subcategory_items': subcategory_items}
 
     return render(request, 'index.html', context_dict)
+
 
 def category_detail(request, category_id):
     category = get_object_or_404(Category, pk=category_id)
     subcategories = category.subcategory_set.all()
     items = Item.objects.filter(subcategory__category=category)  # Filter items based on the category
     categories = Category.objects.all()
-    context_dict = {'category': category, 'subcategories': subcategories, 'items': items, 'categories': categories}
+    random_items = Item.objects.order_by('?')[:12]
+    context_dict = {'category': category, 'subcategories': subcategories, 'items': items, 'categories': categories, 'random_items': random_items }
 
     return render(request, 'category_detail.html', context_dict)
 
@@ -25,14 +37,15 @@ def subcategory_detail(request, subcategory_id):
     subcategory = get_object_or_404(Subcategory, pk=subcategory_id)
     items = Item.objects.filter(subcategory=subcategory)
     categories = Category.objects.all()
-    context_dict = {'subcategory': subcategory, 'items': items, 'categories': categories}
-
+    random_items = Item.objects.order_by('?')[:12]
+    context_dict = {'subcategory': subcategory, 'items': items, 'categories': categories, 'random_items': random_items}
+    
     return render(request, 'subcategory_detail.html', context_dict)
 
 def item_detail(request, item_id):
     item = get_object_or_404(Item, pk=item_id)
     categories = Category.objects.all()
-    recommended_items = Item.objects.filter(subcategory=item.subcategory).exclude(id=item_id).order_by('?')[:5]
+    recommended_items = Item.objects.filter(subcategory=item.subcategory).exclude(id=item_id).order_by('?')[:12]
     context_dict = {'item': item, 'categories': categories, 'recommended_items': recommended_items}
 
     return render(request, 'item_detail.html', context_dict)
@@ -51,7 +64,7 @@ def cart(request):
 
     total_price = sum(item.item.price * item.quantity for item in cart_items)
     total_weight = sum(item.item.weight * item.quantity for item in cart_items)
-    random_items = Item.objects.order_by('?')[:6]
+    random_items = Item.objects.order_by('?')[:12]
     
     categories = Category.objects.all()
     context_dict = {'cart_items': cart_items, 

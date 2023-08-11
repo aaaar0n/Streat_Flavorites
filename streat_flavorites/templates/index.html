@@ -24,7 +24,7 @@
 
 <div class="category-container">
     <div class="category">
-        <h2>Most Liked Items</h2>
+        <h2 style="font-size: 30px;"> Most Liked Items </h2>
         <div class="item-container">
             {% for item in top_liked_items %}
                 <div class="item-box">
@@ -42,16 +42,16 @@
         </div>
     </div>
 </div>
-
+<hr class="separator-line"> 
 <div class="category-container">
     {% for category in categories %}
         <div class="category">
-            <h2><a href="{% url 'category_detail' category.id %}">{{ category.name }} </a></h2>
+            <h2><a href="{% url 'category_detail' category.id %}" style="font-size: 30px;">{{ category.name }}</a></h2>
             <ul class="subcategory-list">
                 {% for subcategory in category.subcategory_set.all %}
                     <div class="subcategory">
                         
-                        <div class="indent"><h3><a href="{% url 'subcategory_detail' subcategory.id %}" class="subcategory-link">{{ subcategory.name }}</a></h3> </div>
+                        <div class="indent"><h3><a href="{% url 'subcategory_detail' subcategory.id %}" class="subcategory-link" style="font-size: 20px;">{{ subcategory.name }}</a></h3> </div>
                         <ul class="item-list">
                             <div class="item-container">
                                 {% for item in subcategory.item_set.all|slice:":6" %}
@@ -73,6 +73,7 @@
                 {% endfor %}
             </ul>
         </div>
+        <hr class="separator-line"> 
     {% endfor %}
 </div>
 
