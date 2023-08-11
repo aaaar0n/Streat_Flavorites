@@ -10,7 +10,8 @@
 <div class="banner-container">
         {% for banner in banners %}
             <div class="banner-item">
-                <img src="{{ banner.image.url }}" alt="{{ banner.title }}" class="banner-image">
+                <a href="{{ banner.url }}">
+                <img src="{{ banner.image.url }}" alt="{{ banner.title }}" class="banner-image"> </a>
                 <!-- <h2>{{ banner.title }}</h2> 
                  <p>{{ banner.description }}</p> -->
             </div>

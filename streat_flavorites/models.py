@@ -41,3 +41,4 @@ class Banner(models.Model):
     image = models.ImageField(upload_to='banners/')
     title = models.CharField(max_length=100)
     description = models.TextField()
+    url = models.URLField(blank=True)  # Add a URL field

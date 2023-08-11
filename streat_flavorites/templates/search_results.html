@@ -23,8 +23,12 @@
                 <!-- Display other item details... -->
             </div>
         {% endfor %}
-    </div>
-    <br>
+    </div><br>
+    
+    {% if not items %}
+        <p>No items found.</p>
+    {% endif %}<br>
+    
     <hr class="separator-line"> 
     <br>
     <div class="recommended-items">
@@ -46,7 +50,5 @@
         </div>
     </div>
     
-    {% if not items %}
-        <p>No items found.</p>
-    {% endif %}
+    
 {% endblock %}
