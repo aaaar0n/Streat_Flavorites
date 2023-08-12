@@ -6,6 +6,7 @@
 
 {% block content %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/index_styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/item_box.css' %}">
     <div class="category-container">
         <div class="category">
             <h2>{{ subcategory.category.name }}</h2>
@@ -33,22 +34,4 @@
         </div>
     </div>
     <br><hr class="separator-line"> <br>
-    <div class="recommended-items">
-        <h3>Recommended Items</h3>
-        <div class="item-container">
-            {% for random_item in random_items %}
-                <div class="item-box">
-                    {% if random_item.photo %}
-                        <a href="{% url 'item_detail' random_item.id %}">
-                            <img src="{{ random_item.photo.url }}" alt="{{ random_item.name }} Photo" class="item-image">
-                        </a>
-                    {% endif %}
-                    <h2><a href="{% url 'item_detail' random_item.id %}" class="item-name">{{ random_item.name }}</a></h2>
-                    <p class="item-price">${{ random_item.price }}</p>
-                    <p class="item-stock">Stocks: {{ random_item.stocks }}</p>
-                </div>
-    
-        {% endfor %}
-        </div>
-    </div>
 {% endblock %}

@@ -13,15 +13,10 @@ def index(request):
     categories = Category.objects.all()
     banners = Banner.objects.all()
     top_liked_items = Item.objects.order_by('-likes')[:6]
+    random_items = Item.objects.order_by('?')[:12]
 
-    # Get random items for each subcategory
-    subcategory_items = {}
-    for category in categories:
-        for subcategory in category.subcategory_set.all():
-            random_items = list(subcategory.item_set.all().order_by('?')[:6])
-            subcategory_items[subcategory] = random_items
 
-    context_dict = {'categories': categories, 'top_liked_items': top_liked_items, 'banners': banners, 'subcategory_items': subcategory_items}
+    context_dict = {'random_items': random_items, 'categories': categories, 'top_liked_items': top_liked_items, 'banners': banners}
 
     return render(request, 'index.html', context_dict)
 
@@ -48,8 +43,9 @@ def subcategory_detail(request, subcategory_id):
 def item_detail(request, item_id):
     item = get_object_or_404(Item, pk=item_id)
     categories = Category.objects.all()
-    recommended_items = Item.objects.filter(subcategory=item.subcategory).exclude(id=item_id).order_by('?')[:12]
-    context_dict = {'item': item, 'categories': categories, 'recommended_items': recommended_items}
+    recommended_items = Item.objects.filter(subcategory=item.subcategory).exclude(id=item_id).order_by('?')[:6]
+    random_items = Item.objects.order_by('?')[:6]
+    context_dict = {'item': item, 'categories': categories, 'recommended_items': recommended_items, 'random_items': random_items}
 
     return render(request, 'item_detail.html', context_dict)
 
@@ -166,7 +162,7 @@ def checkout(request):
             user_cart.cartitem_set.all().delete()
             
             # Redirect to the thank you page
-            return redirect('thank_you')  # Replace with your desired URL
+            return redirect('order_completed')  # Replace with your desired URL
             
     else:
         form = CheckoutForm()
@@ -205,7 +201,7 @@ def send_order_email(order_details):
               f'Order Items:\n'
     
     for item in order_details["cart_items"]:
-        message_admin += f'{item.quantity}x {item.item.name} - ${item.total}\n'
+        message_admin += f'{item.quantity}x\t {item.item.name} - ${item.total}\n'
         
     message_buyer = message_admin
 

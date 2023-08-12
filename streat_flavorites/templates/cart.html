@@ -6,6 +6,7 @@
 
 {% block content %}
     <link rel="stylesheet" href="{% static 'css/cart_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/item_box.css' %}">
 
     <h1>Your Cart</h1><br>
     {% if cart_items %}
@@ -28,26 +29,26 @@
 
                 {% for cart_item in cart_items %}
                     <tr class="cart-item">
-                        <td class="item-image">
+                        <td class="cart-item-image">
                             {% if cart_item.item.photo %}
                                 <a href="{% url 'item_detail' cart_item.item.id %}">
                                     <img src="{{ cart_item.item.photo.url }}" alt="{{ cart_item.item.name }} Photo" style="max-width: 50px; max-height: 50px;">
                                 </a>
                             {% endif %}
                         </td>
-                        <td class="item-description">
+                        <td class="cart-item-description">
                             <h><a href="{% url 'item_detail' cart_item.item.id %}">{{ cart_item.item.name }}</a></h>
                         </td>
-                        <td class="item-price">${{ cart_item.item.price }}</td>
-                        <td class="item-quantity">
+                        <td class="cart-item-price">${{ cart_item.item.price }}</td>
+                        <td class="cart-item-quantity">
                             <form method="post" action="{% url 'adjust_cart' cart_item.id %}" class="adjust-quantity-form">
                                 {% csrf_token %}
                                 <input type="number" name="quantity" value="{{ cart_item.quantity }}" min="1" max="{{ cart_item.item.stocks }}" style="width: 40px;">
                                 <button type="submit" class="adjust-quantity-button">Adjust</button>
                             </form>
                         </td>
-                        <td class="item-total">${{ cart_item.total }}</td>
-                        <td class="item-remove">
+                        <td class="cart-item-total">${{ cart_item.total }}</td>
+                        <td class="cart-item-remove">
                             <a href="{% url 'remove_from_cart' cart_item.id %}">Remove</a>
                         </td>
                     </tr>
@@ -56,14 +57,6 @@
         </table><br>
 
 
-
-
-
-
-
-
-
-        
         <p class="sub-total">Sub Total: ${{ total_price }}</p>
         <p class="sub-total">Estimated Total Weight: {{ total_weight }} grams</p>
     {% else %}
@@ -79,27 +72,6 @@
     <br>
     <hr class="separator-line"> 
     <br>
-    <div class="container">
-        <div class="recommended-items">
-            <h2>Items that you might like</h2>
-            <div class="item-list">
-                {% for item in random_items %}
-                    <div class="item-container">
-                        <div class="item-box">
-                            {% if item.photo %}
-                                <a href="{% url 'item_detail' item.id %}">
-                                    <img src="{{ item.photo.url }}" alt="{{ item.name }} Photo" class="item-image">
-                                </a>
-                            {% endif %}
-                            <h2><a href="{% url 'item_detail' item.id %}" class="item-name">{{ item.name }}</a></h2>
-                            <p class="item-price">${{ item.price }}</p>
-                            <p class="item-stock">Stocks: {{ item.stocks }}</p>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 

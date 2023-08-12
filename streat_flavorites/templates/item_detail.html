@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/item_details_styles.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/item_box.css' %}">
     
-    <div class="container">
+
         <div class="item-directory">
             <a href="{% url 'index' %}">Home</a> &raquo;
             <a href="{% url 'category_detail' item.subcategory.category.id %}">{{ item.subcategory.category.name }}</a> &raquo;
@@ -63,7 +63,8 @@
                 {% endfor %}
             </div>
         </div>
-    </div>
+        <br>
+
 
     <script>
         const likeButton = document.getElementById('like-button');

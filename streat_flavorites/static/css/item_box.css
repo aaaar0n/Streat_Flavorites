@@ -32,28 +32,3 @@
     margin: 0px 0;
 }
 
-.quantity-adjustment {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.quantity-adjustment input {
-    width: 50px;
-    padding: 5px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-.add-to-cart-button {
-    background-color: #FFA351;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-}
-
-.add-to-cart-button:hover {
-    background-color: #FF942A;
-}

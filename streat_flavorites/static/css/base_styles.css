@@ -184,7 +184,7 @@ a {
     transition: color 0.3s;
 }
 
-.item-box a:hover {
+.container a:hover {
     color: #FFA351; /* Color when hovering */
 }
 

@@ -6,7 +6,7 @@
 
 {% block content %}
     <link rel="stylesheet" href="{% static 'css/checkout.css' %}">
-    <link rel="stylesheet" href="{% static 'css/cart_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/item_box.css' %}">
     
     <div class="checkout-container">
         <div class="form-container">
@@ -48,25 +48,4 @@
         </div>
     </div>
     
-    <div class="container">
-        <div class="recommended-items">
-            <h2>Items that you might like</h2>
-            <div class="item-list">
-                {% for item in random_items %}
-                    <div class="item-container">
-                        <div class="item-box">
-                            {% if item.photo %}
-                                <a href="{% url 'item_detail' item.id %}">
-                                    <img src="{{ item.photo.url }}" alt="{{ item.name }} Photo" class="item-image">
-                                </a>
-                            {% endif %}
-                            <h2><a href="{% url 'item_detail' item.id %}" class="item-name">{{ item.name }}</a></h2>
-                            <p class="item-price">${{ item.price }}</p>
-                            <p class="item-stock">Stocks: {{ item.stocks }}</p>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
 {% endblock %}

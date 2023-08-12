@@ -37,7 +37,7 @@
                     <h2><a href="{% url 'item_detail' item.id %}" class="item-name">{{ item.name }}</a></h2>
                     <p class="item-price">${{ item.price }}</p>
                     <p class="item-stock">Stocks: {{ item.stocks }}</p>
-                </div>
+                 </div>
             {% endfor %}
         </div>
     </div>
@@ -46,7 +46,7 @@
 <div class="category-container">
     {% for category in categories %}
         <div class="category">
-            <h2><a href="{% url 'category_detail' category.id %}" style="font-size: 30px;">{{ category.name }}</a></h2>
+            <h2><a href="{% url 'category_detail' category.id %}" style="font-size: 30px;" class="categ">{{ category.name }}</a></h2>
             <ul class="subcategory-list">
                 {% for subcategory in category.subcategory_set.all %}
                     <div class="subcategory">
