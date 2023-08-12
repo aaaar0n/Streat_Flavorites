@@ -202,8 +202,8 @@ def send_order_email(order_details):
     
     for item in order_details["cart_items"]:
         message_admin += f'{item.quantity}x\t {item.item.name} - ${item.total}\n'
-        
-    message_buyer = message_admin
+        message_buyer += f'{item.quantity}x\t {item.item.name} - ${item.total}\n'
+    
 
     admin_email = 'sflavorites.host@gmail.com'  # Change this to your email address
     send_mail(subject_admin, message_admin, 'autoreply.sflavorites@gmail.com', [admin_email])
