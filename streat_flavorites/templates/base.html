@@ -40,7 +40,7 @@
                 <a href="{% url 'category_detail' category.id %}" class="category-dropdown">{{ category.name }} <i class="fas fa-caret-down"></i></a>
                 <div class="dropdown-content">
                     {% for subcategory in category.subcategory_set.all %}
-                        <a href="{% url 'subcategory_detail' subcategory.id %}">{{ subcategory.name }}</a>
+                        <a href="{% url 'subcategory_detail' subcategory.id %}">{{ subcategory.name }}</a><br>
                     {% endfor %}
                 </div>
             </div>
