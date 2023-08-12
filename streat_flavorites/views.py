@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Category, Subcategory, Item, Banner
+from .models import Category, Subcategory, Item, Banner, Review
 from .models import Cart, CartItem
 from random import sample
 from django.http import JsonResponse
@@ -215,7 +215,11 @@ def order_confirmation(request):
 
 def order_completed(request):
     categories = Category.objects.all()
-    context_dict = {'categories': categories}
+    announcement_message = (
+        "This site is currently on its Beta. This means that the site is still under testing and you may encounter some bugs. But don't worry, as for latest testing, the site is working fine and as it should be.\n\n"               
+        "Since this is still a Beta, payment processing will be made through email. Once you placed your order, you will receive an email of the summary of your order. We will revert back to you within 24 hours. The payment options will be discussed on the email. As for now, we only accept bank transfer.\n\n"
+        "For more inquiries, you may contact us on our social media account. We will respond to your message ASAP.")
+    context_dict = {'categories': categories, 'announcement': announcement_message}
     return render(request, 'order_completed.html', context_dict)
 
 def like_item(request, item_id):
@@ -229,3 +233,11 @@ def generate_unique_code():
     characters = string.ascii_letters + string.digits
     code = ''.join(random.choice(characters) for _ in range(10))
     return code
+
+def save_review(request):
+    if request.method == 'POST':
+        review_text = request.POST.get('review')
+        rating = request.POST.get('rating')
+        if review_text and rating:
+            Review.objects.create(user=request.user, review_text=review_text, rating=rating)
+    return redirect('order_completed')  # Replace with the appropriate URL

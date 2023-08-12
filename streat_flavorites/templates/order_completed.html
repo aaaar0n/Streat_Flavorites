@@ -1,8 +1,40 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %}Thank You{% endblock %}
 
 {% block content %}
-    <h2>Thank You for Your Order!</h2>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/order_completed.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/checkout.css' %}">
+
+    <h2>Thank You for Your Order!</h2><br>
     <p>Your order has been placed successfully.</p>
+    <p>We have sent the summary of your order to your email.</p>
+    <br>
+    <p>Please leave a review including the star rating based</p>
+    <p>on your experience in shopping with us.</p>
+    <br>
+
+    <h3>Leave a Review</h3>
+    <form method="post" action="{% url 'save_review' %}">
+        {% csrf_token %}
+        <textarea name="review" rows="4" cols="50" placeholder="Leave a review"></textarea>
+        <div class="star-rating">
+            <input type="radio" name="rating" value="1" id="1star"><label for="1star"><i class="fas fa-star"></i></label>
+            <input type="radio" name="rating" value="2" id="2stars"><label for="2stars"><i class="fas fa-star"></i></label>
+            <input type="radio" name="rating" value="3" id="3stars"><label for="3stars"><i class="fas fa-star"></i></label>
+            <input type="radio" name="rating" value="4" id="4stars"><label for="4stars"><i class="fas fa-star"></i></label>
+            <input type="radio" name="rating" value="5" id="5stars"><label for="5stars"><i class="fas fa-star"></i></label>
+        </div>
+        <button type="submit">Submit Review</button>
+    </form>
+    <br>
+    <div class="checkout-container"></div>
+        <div class="announcement-box">
+            <h3>IMPORTANT ANNOUNCEMENT</h3>
+            <p>{{ announcement|linebreaksbr }}</p>
+        </div>
+    </div>
 {% endblock %}

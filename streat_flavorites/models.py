@@ -42,3 +42,9 @@ class Banner(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
     url = models.URLField(blank=True)  # Add a URL field
+
+class Review(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    review_text = models.TextField()
+    rating = models.PositiveIntegerField(choices=[(i, i) for i in range(1, 6)], default=0)
+    timestamp = models.DateTimeField(auto_now_add=True)

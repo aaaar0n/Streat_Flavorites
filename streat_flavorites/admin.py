@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Subcategory, Item, Banner
+from .models import Category, Subcategory, Item, Banner, Review
 from .forms import ItemForm
 
 class ItemAdmin(admin.ModelAdmin):
@@ -24,3 +24,4 @@ class SubcategoryAdmin(admin.ModelAdmin):
 admin.site.register(Category)
 admin.site.register(Subcategory, SubcategoryAdmin)
 admin.site.register(Item, ItemAdmin)
+admin.site.register(Review)
