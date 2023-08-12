@@ -19,7 +19,7 @@
     <div class="header">
         <div class="header-logo">
             <a href="{% url 'index' %}">
-                <img src="{% static 'logo1.png' %}" alt="Logo">
+                <img src="{% static 'logo3.png' %}" alt="Logo">
             </a>
         </div>
         <form action="{% url 'search_items' %}" method="GET" class="search-form">
@@ -27,10 +27,16 @@
             <button type="submit" class="search-button">Search</button>
         </form>
 
+        <a href="{% url 'index' %}" class="home-icon">
+            <img src="{% static 'home1.png' %}" alt="Home" class="home-image">
+        </a>
+
                     <!-- --------------... CART ...-------------- --> 
         <a href="{% url 'cart' %}" class="cart-link">
             <img src="{% static 'cart1.png' %}" alt="Cart" class="cart-image">
         </a>
+
+        
     </div>
 
                     <!-- --------------... SUB-HEADER ...-------------- -->
@@ -46,7 +52,11 @@
             </div>
         {% endfor %}
     </div>
-
+    <div class="floating-fb-button">
+        <a href="https://www.facebook.com/profile.php?id=100095337263420">
+            <img src="{% static 'fb.png' %}" alt="Facebook" class="fb-icon">
+        </a>
+    </div>
 
         <div class="container">
             {% block content %}{% endblock %}
@@ -83,15 +93,19 @@
         </a>
     </div>
 
-    
+    <div class="floating-home-button">
+        <a href="{% url 'index' %}">
+            <img src="{% static 'home1.png' %}" alt="Home" class="home-icon">
+        </a>
+    </div>
+
     <div class="footer">
         <div class="footer-logo">
-            <img src="{% static 'images/logo.png' %}" alt="Logo">
-            <h1>Your Online Store</h1>
+            <img src="{% static 'logo3.png' %}" alt="Logo">
         </div>
         <div class="footer-contact">
-            <p>Contact us: contact@example.com</p>
-            <p>Phone: 123-456-7890</p>
+            <p>Contact us: sflavorites.host@gmail.com</p>
+            <p>Phone: 603-233-8815</p>
         </div>
     </div>
     

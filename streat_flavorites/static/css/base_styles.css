@@ -35,17 +35,17 @@ body {
 }
 
 .header-logo img {
-    max-width: 250px;
-    max-height: 250px;
+    max-width: 200px;
+    max-height: 200px;
     margin-right: 20px;
 }
 
 .search-form {
     display: flex;
-    align-items: center;
     padding: 10px;
     border-radius: 20px;
     background-color: #fff;
+    margin-left: 1050px;
 }
 
 .search-input {
@@ -201,10 +201,48 @@ a {
     display: block;
 }
 
+.floating-home-button {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    z-index: 1000; /* Ensure it's above other content */
+}
+
+.home-icon {
+    width: 100px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+    display: block;
+}
+
+.home-icon img {
+    width: 100%;
+    height: 100%;
+}
+
+.home-image {
+    width: 100px;
+    height: auto;
+    margin-left: 20px;
+    margin-right: 100px;
+}
+
+.floating-fb-button {
+    position: fixed;
+    bottom: 20px;
+    right: 120px;
+    z-index: 1000; /* Ensure it's above other content */
+}
+
+.fb-icon {
+    width: 100px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+    display: block;
+}
+
 .footer {
     background-color: #FFA351;
     color: white;
-    text-align: center;
+    text-align: left;
     display: flex;
     justify-content: space-between;
     align-items: center;
