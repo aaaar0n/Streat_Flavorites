@@ -1,5 +1,7 @@
 from django import forms
 from .models import Item, Subcategory
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 class ItemForm(forms.ModelForm):
     class Meta:
@@ -21,3 +23,15 @@ class CheckoutForm(forms.Form):
     delivery_address = forms.CharField(label='Delivery Address', widget=forms.Textarea)
     
     # Add any other fields you need for the checkout process
+class CustomUserCreationForm(UserCreationForm):
+    email = forms.EmailField(label='Email', required=True)
+    
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password1', 'password2')
+        
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError('This email address is already in use.')
+        return email

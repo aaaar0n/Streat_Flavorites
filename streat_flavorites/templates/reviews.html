@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Reviews{% endblock %}
+
+{% block content %}
+    <h2>Reviews</h2>
+    <div class="review-list">
+        {% for review in reviews %}
+            <div class="review">
+                <h3>{{ review.user.username }}</h3>
+                <div class="star-rating">
+                    {% for _ in range(review.rating) %}
+                        <i class="fas fa-star"></i>
+                    {% endfor %}
+                    {% for _ in range(5 - review.rating) %}
+                        <i class="far fa-star"></i>
+                    {% endfor %}
+                </div>
+                <p>{{ review.comment }}</p>
+            </div>
+        {% empty %}
+            <p>No reviews available.</p>
+        {% endfor %}
+    </div>
+{% endblock %}

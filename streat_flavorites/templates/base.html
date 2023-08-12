@@ -26,14 +26,28 @@
             <input type="text" name="query" class="search-input" placeholder="Search for items...">
             <button type="submit" class="search-button">Search</button>
         </form>
-
-        <a href="{% url 'index' %}" class="home-icon">
-            <img src="{% static 'home1.png' %}" alt="Home" class="home-image">
+        {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}" class="header-link">
+                <img src="{% static 'logout3.png' %}" alt="Logout" class="header-image">
+            </a>
+            <a href="{% url 'reviews' %}" class="header-link">
+                <img src="{% static 'reviews3.png' %}" alt="Reviews" class="header-image">
+            </a>
+        {% else %}
+            <a href="{% url 'login' %}" class="header-link">
+                <img src="{% static 'login3.png' %}" alt="Login" class="header-image">
+            </a>
+            <a href="{% url 'register' %}" class="header-link">
+                <img src="{% static 'register3.png' %}" alt="Register" class="header-image">
+            </a>
+        {% endif %}
+        <a href="{% url 'index' %}" class="header-link">
+            <img src="{% static 'home3.png' %}" alt="Home" class="header-image">
         </a>
 
                     <!-- --------------... CART ...-------------- --> 
-        <a href="{% url 'cart' %}" class="cart-link">
-            <img src="{% static 'cart1.png' %}" alt="Cart" class="cart-image">
+        <a href="{% url 'cart' %}" class="header-link">
+            <img src="{% static 'cart3.png' %}" alt="Cart" class="header-image">
         </a>
 
         
@@ -94,13 +108,13 @@
         
             <div class="floating-cart-button">
                 <a href="{% url 'cart' %}">
-                    <img src="{% static 'cart1.png' %}" alt="Cart" class="cart-image-float">
+                    <img src="{% static 'cart3.png' %}" alt="Cart" class="cart-image-float">
                 </a>
             </div>
         
             <div class="floating-home-button">
                 <a href="{% url 'index' %}">
-                    <img src="{% static 'home1.png' %}" alt="Home" class="home-icon">
+                    <img src="{% static 'home3.png' %}" alt="Home" class="header-link">
                 </a>
             </div>
         

@@ -11,11 +11,11 @@ body {
 @media (max-width: 414px) {
     body {
         font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f0f0f0;
-    width: 450%;
-    }
+        margin: 0;
+        padding: 0;
+        background-color: #f0f0f0;
+        width: 450%;
+        }
 }
 
 @media (min-width: 568px) and (max-width: 812px) and (orientation: landscape) {
@@ -25,7 +25,7 @@ body {
         padding: 0;
         background-color: #f0f0f0;
         width: 250%;
-    }
+        }
 }
 
 
@@ -56,20 +56,21 @@ body {
     padding: 10px;
     border-radius: 20px;
     background-color: #fff;
-    margin-left: 60%;
+    margin-left: 48%;
 }
 
 .home-icon {
-    width: 100px; /* Adjust the width as needed */
+    
     height: auto; /* Maintain aspect ratio */
     display: block;
     margin-left: 1%;
 }
 
-.cart-link {
+.header-link {
     display: flex;
     align-items: center;
     margin-left: 1%;
+    width: 100px; /* Adjust the width as needed */
 }
 
 
@@ -104,9 +105,10 @@ body {
 }
 
 
-.cart-image {
+.header-image {
     width: 100px;
     height: auto;
+    border-radius: 20px;
 }
 
 /* Subheader styles */

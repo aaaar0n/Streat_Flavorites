@@ -8,6 +8,9 @@ from .models import CartItem
 from .forms import CheckoutForm
 import string
 import random
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from .forms import CustomUserCreationForm
 
 def index(request):
     categories = Category.objects.all()
@@ -30,6 +33,37 @@ def category_detail(request, category_id):
     context_dict = {'category': category, 'subcategories': subcategories, 'items': items, 'categories': categories, 'random_items': random_items }
 
     return render(request, 'category_detail.html', context_dict)
+
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('index')  # Replace with your desired URL after login
+
+    return render(request, 'login.html')
+
+def logout_view(request):
+    logout(request)
+    return redirect('index') 
+
+def register(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            
+            # Log the user in
+            login(request, user)
+            
+            return redirect('index')  # Redirect to desired page after registration
+    else:
+        form = CustomUserCreationForm()
+    
+    context = {'form': form}
+    return render(request, 'register.html', context)
 
 def subcategory_detail(request, subcategory_id):
     subcategory = get_object_or_404(Subcategory, pk=subcategory_id)
@@ -234,6 +268,7 @@ def generate_unique_code():
     code = ''.join(random.choice(characters) for _ in range(10))
     return code
 
+@login_required
 def save_review(request):
     if request.method == 'POST':
         review_text = request.POST.get('review')
@@ -241,3 +276,9 @@ def save_review(request):
         if review_text and rating:
             Review.objects.create(user=request.user, review_text=review_text, rating=rating)
     return redirect('order_completed')  # Replace with the appropriate URL
+
+@login_required
+def reviews(request):
+    reviews = Review.objects.all()
+    context = {'reviews': reviews}
+    return render(request, 'reviews.html', context)
