@@ -6,13 +6,13 @@
     align-items: center;
 }
 
-.item-image {
+.item-details-image {
     max-width: 100%;
     height: auto;
     max-height: 300px;
 }
 
-.item-info {
+.item-details-info {
     flex: 2;
     padding: 20px;
     border: 1px solid #ddd;
@@ -27,38 +27,6 @@
     margin-top: 0;
 }
 
-.item-description,
-.item-price,
-.item-stock {
-    margin: 10px 0;
-}
-
-.quantity-adjustment {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.quantity-adjustment input {
-    width: 50px;
-    padding: 5px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-.add-to-cart-button {
-    background-color: #FFA351;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-}
-
-.add-to-cart-button:hover {
-    background-color: #FF942A;
-}
-
 .like-section {
     display: flex;
     align-items: center;
@@ -66,7 +34,7 @@
 }
 
 .like-button {
-    background-color: #FBE27A;
+    background-color: #FFA351;
     border: none;
     border-radius: 5px;
     padding: 5px 10px;
@@ -81,37 +49,6 @@
     margin-left: 5px;
 }
 
-.recommended-items .item-box {
-    border: 4px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin: 5px;
-    width: calc(19% - 10px); /* Adjust width for five items per row with margins */
-    height: 350px;
-    text-align: center;
-    display: inline-block; /* Display items side by side */
-    vertical-align: top; /* Align items at the top */
-    box-sizing: border-box; /* Include border and padding in width calculation */
-    position: relative;
-}
-
-.recommended-items .item-image {
-    max-width: 100%; /* Adjust the image size to fit within the box */
-    max-height: 120px; /* Adjust the image height */
-    margin-bottom: 10px; /* Add spacing below the image */
-}
-
-.recommended-items .item-name {
-    margin: 0; /* Remove margin for item name */
-}
-
-.recommended-items .item-description,
-.recommended-items .item-price,
-.recommended-items .item-stock {
-    margin: 5px 0; /* Add small margin between other item details */
-}
-
 .item-description-box {
     background-color: #f8f8f8;
     border: 1px solid #ddd;
@@ -119,7 +56,7 @@
     padding: 20px;
     margin-top: 20px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    max-width: 1200px;
+    max-width: 1120px;
 }
 
 .item-description-box h3 {

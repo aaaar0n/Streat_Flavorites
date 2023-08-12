@@ -6,6 +6,7 @@
 
 {% block content %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/item_details_styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/item_box.css' %}">
     
     <div class="container">
         <div class="item-directory">
@@ -16,9 +17,9 @@
         <br>
         <div class="item-details">
             <div class="item-image-container">
-                <img src="{{ item.photo.url }}" alt="{{ item.name }} Photo" class="item-image">
+                <img src="{{ item.photo.url }}" alt="{{ item.name }} Photo" class="item-details-image">
             </div>
-            <div class="item-info">
+            <div class="item-details-info">
                 <h2>{{ item.name }}</h2>
                 <p class="item-price">Price: ${{ item.price }}</p>
                 <p class="item-stock">Stocks: {{ item.stocks }}</p>
