@@ -217,10 +217,10 @@ def send_order_email(order_details):
 def order_confirmation(request):
     return render(request, 'order_confirmation.html')
 
-def thank_you(request):
+def order_completed(request):
     categories = Category.objects.all()
     context_dict = {'categories': categories}
-    return render(request, 'thank_you.html', context_dict)
+    return render(request, 'order_completed.html', context_dict)
 
 def like_item(request, item_id):
     item = get_object_or_404(Item, pk=item_id)

@@ -37,7 +37,7 @@ body {
 .header-logo img {
     max-width: 250px;
     max-height: 250px;
-    margin-right: 10px;
+    margin-right: 20px;
 }
 
 .search-form {
@@ -83,7 +83,6 @@ body {
     padding: 15px;
     width: 100%;
     z-index: 1000;
-    transition: background-color 0.3s ease;
     position: relative;
 }
 
@@ -111,6 +110,7 @@ body {
     border-bottom: 1px solid #00000000;
     background-color: #f8d300;
     border-radius: 10px;
+    padding: 8px;
 }
 
 /* Other styles */
@@ -136,6 +136,11 @@ body {
     z-index: 1;
     border-radius: 5px;
     padding: 10px;
+    font-size: 10px;
+    width: 200px;
+}
+
+.dropdown-content a {
     font-size: 16px;
 }
 
@@ -179,8 +184,8 @@ a {
     transition: color 0.3s;
 }
 
-a:hover {
-    color: #ff0000; /* Color when hovering */
+.item-box a:hover {
+    color: #FFA351; /* Color when hovering */
 }
 
 .floating-cart-button {
@@ -196,3 +201,47 @@ a:hover {
     display: block;
 }
 
+.footer {
+    background-color: #FFA351;
+    color: white;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding: 15px 0; /* Adjust padding for vertical spacing */
+    font-size: 24px; /* Adjust font size */
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.footer-logo img {
+    max-width: 150px; /* Adjust the max width as needed */
+    max-height: 150px; /* Adjust the max height as needed */
+    margin-right: 10px;
+}
+
+.footer h1 {
+    margin: 0;
+    padding: 10px 0;
+}
+
+.footer-contact {
+    padding-right: 20px; /* Add space on the right for contact details */
+}
+
+.separator-line {
+    border: 2px solid #ddd;
+    margin: 20px auto;
+    width: 90%; /* Adjust the width as needed */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
