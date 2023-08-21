@@ -233,8 +233,10 @@ def send_order_email(order_details):
               f'Order Items:\n'
     
     subject_buyer = f'Order Request Successful - REF-ID: {reference_code}'
-    message_buyer = f'You will receive a call within 24 hours to confirm your order.\n' \
-              f'For the meantime, you may check the summary of your order below:\n\n' \
+    message_buyer = f'HI VALUED CUSTOMER,\n\n' \
+              f'WE RECEIVED YOUR ORDER AND NOW BEING PROCESSED ON OUR END.\n' \
+              f'YOU WILL RECEIVE A CALL WITHIN 24 HOURS TO CONFIRM YOUR ORDER.\n' \
+              f'FOR THE MEANTIME, YOU MAY CHECK THE SUMMARY OF YOUR ORDER BELOW:\n\n' \
               f'Name: {order_details["user_name"]}\n' \
               f'Email: {order_details["user_email"]}\n' \
               f'Contact Number: {order_details["contact_number"]}\n' \
@@ -247,8 +249,8 @@ def send_order_email(order_details):
         message_admin += f'{item.quantity}x\t {item.item.name} - ${item.total}\n'
         message_buyer += f'{item.quantity}x\t {item.item.name} - ${item.total}\n'
     
-    thank_you_message = "\n\nWoohoo! Not only are you about to benefit, but you just supported our small business, and that means the world. \n\nThank you for your order!"
-    message_buyer += thank_you_message.upper()
+    thank_you_message = "\n\nWOOHOO! NOT ONLY ARE YOU ABOUT TO BENEFIT, BUT YOU JUST SUPPORTED OUR SMALL BUSINESS, AND THAT MEANS THE WORLD. \n\nTHANK YOU FOR YOUR ORDER!"
+    message_buyer += thank_you_message
 
     admin_email = 'sflavorites.host@gmail.com'  # Change this to your email address
     send_mail(subject_admin, message_admin, 'autoreply.sflavorites@gmail.com', [admin_email])
