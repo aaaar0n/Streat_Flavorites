@@ -71,6 +71,7 @@ body {
     align-items: center;
     margin-left: 1%;
     width: 100px; /* Adjust the width as needed */
+    border-radius: 20px;
 }
 
 
@@ -235,6 +236,7 @@ a {
     width: 100px; /* Adjust the width as needed */
     height: auto; /* Maintain aspect ratio */
     display: block;
+    border-radius: 20px;
 }
 
 .floating-home-button {

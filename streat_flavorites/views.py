@@ -12,6 +12,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm
 
+
 def index(request):
     categories = Category.objects.all()
     banners = Banner.objects.all()
@@ -167,6 +168,12 @@ def checkout(request):
         "This site is currently on its Beta. This means that the site is still under testing and you may encounter some bugs. But don't worry, as for latest testing, the site is working fine and as it should be.\n\n"               
         "Since this is still a Beta, payment processing will be made through email. Once you placed your order, you will receive an email of the summary of your order. We will revert back to you within 24 hours. The payment options will be discussed on the email. As for now, we only accept bank transfer.\n\n"
         "For more inquiries, you may contact us on our social media account. We will respond to your message ASAP.")
+    process_message = (
+        "1. After clicking 'Place Order', the summary of your order will be sent to your email address.\n"
+        "2. You will receive a call from us within 24 hours to confirm your order and details. \n"
+        "3. We will also discuss about the payment method.\n"
+        "4. After confirming all necessary details, we will send you the tracking number of your order through email and SMS."
+    )
     total_weight = sum(item.item.weight * item.quantity for item in cart_items)
 
 
@@ -208,6 +215,7 @@ def checkout(request):
                'categories': categories, 
                'random_items': random_items,
                'announcement': announcement_message,
+               'process': process_message,
                }
     
     return render(request, 'checkout.html', context)
@@ -225,7 +233,8 @@ def send_order_email(order_details):
               f'Order Items:\n'
     
     subject_buyer = f'Order Request Successful - REF-ID: {reference_code}'
-    message_buyer = f'Here is the summary of your order:\n\n' \
+    message_buyer = f'You will receive a call within 24 hours to confirm your order.\n' \
+              f'For the meantime, you may check the summary of your order below:\n\n' \
               f'Name: {order_details["user_name"]}\n' \
               f'Email: {order_details["user_email"]}\n' \
               f'Contact Number: {order_details["contact_number"]}\n' \
@@ -238,6 +247,8 @@ def send_order_email(order_details):
         message_admin += f'{item.quantity}x\t {item.item.name} - ${item.total}\n'
         message_buyer += f'{item.quantity}x\t {item.item.name} - ${item.total}\n'
     
+    thank_you_message = "\n\nWoohoo! Not only are you about to benefit, but you just supported our small business, and that means the world. \n\nThank you for your order!"
+    message_buyer += thank_you_message.upper()
 
     admin_email = 'sflavorites.host@gmail.com'  # Change this to your email address
     send_mail(subject_admin, message_admin, 'autoreply.sflavorites@gmail.com', [admin_email])
@@ -279,6 +290,8 @@ def save_review(request):
 
 @login_required
 def reviews(request):
+    categories = Category.objects.all()
     reviews = Review.objects.all()
-    context = {'reviews': reviews}
+    random_items = Item.objects.order_by('?')[:12]
+    context = {'reviews': reviews, 'categories': categories, 'random_items': random_items}
     return render(request, 'reviews.html', context)

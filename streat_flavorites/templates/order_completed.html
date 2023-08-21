@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/order_completed.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="{% static 'css/checkout.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <h2>Thank You for Your Order!</h2><br>
     <p>Your order has been placed successfully.</p>
@@ -18,7 +19,7 @@
     <br>
 
     <h3>Leave a Review</h3>
-    <form method="post" action="{% url 'save_review' %}">
+    <form id="review-form" method="post" action="{% url 'save_review' %}">
         {% csrf_token %}
         <textarea name="review" rows="4" cols="50" placeholder="Leave a review"></textarea>
         <div class="star-rating">
@@ -30,6 +31,8 @@
         </div>
         <button type="submit">Submit Review</button>
     </form>
+
+    
     <br>
     <div class="checkout-container"></div>
         <div class="announcement-box">
@@ -37,4 +40,37 @@
             <p>{{ announcement|linebreaksbr }}</p>
         </div>
     </div>
+
+    <script>
+        const reviewForm = document.getElementById('review-form');
+        reviewForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            try {
+                const formData = new FormData(reviewForm);
+                const response = await fetch(reviewForm.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                    body: formData,
+                });
+
+                if (response.ok) {
+                    await Swal.fire({
+                        icon: 'success',
+                        title: 'Review Submitted',
+                        text: 'Thank you for your review. You will be redirected to our home page.',
+                    });
+
+                    // Redirect to the home page after the alert is closed
+                    window.location.href = "{% url 'index' %}"; // Replace with your actual home page URL
+                } else {
+                    console.error('Error submitting review:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error submitting review:', error);
+            }
+        });
+    </script>
 {% endblock %}

@@ -1,0 +1,37 @@
+/* reviews.css */
+
+/* Style for the review container */
+.review-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 40%; /* Adjust the maximum width as needed */
+    margin: 0;
+}
+
+/* Style for each individual review */
+.review {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    margin-left: 20px; /* Adjust the left margin as needed */
+    height: 100px; /* Adjust the height as needed */
+    overflow: hidden; /* Hide overflow content if height is exceeded */
+}
+
+.review h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.review p {
+    margin: 10px 0;
+}
+
+/* Style for the "No reviews available" message */
+.review-list p {
+    text-align: center;
+    color: #999;
+}
