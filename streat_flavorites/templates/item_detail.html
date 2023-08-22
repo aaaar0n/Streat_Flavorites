@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block title %}Home - Your Online Store{% endblock %}
+{% block title %}Item - StrEAT Flavorites{% endblock %}
 
 {% block content %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/item_details_styles.css' %}">
@@ -38,6 +38,8 @@
                         <p>Likes: <span id="like-count">{{ item.likes }}</span></p>
                     </div>
                 {% endif %}
+                    <br>
+                    <p class="item-price" style="color: red;">You need to register and login first to be able to use the add to cart function</p>
             </div>
         </div>
 
