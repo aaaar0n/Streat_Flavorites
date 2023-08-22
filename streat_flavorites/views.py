@@ -36,6 +36,8 @@ def category_detail(request, category_id):
     return render(request, 'category_detail.html', context_dict)
 
 def login_view(request):
+    categories = Category.objects.all()
+    random_items = Item.objects.order_by('?')[:12]
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -44,13 +46,15 @@ def login_view(request):
             login(request, user)
             return redirect('index')  # Replace with your desired URL after login
 
-    return render(request, 'login.html')
+    return render(request, 'login.html', {'categories': categories, 'random_items': random_items})
 
 def logout_view(request):
     logout(request)
     return redirect('index') 
 
 def register(request):
+    categories = Category.objects.all()
+    random_items = Item.objects.order_by('?')[:12]
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
@@ -63,8 +67,8 @@ def register(request):
     else:
         form = CustomUserCreationForm()
     
-    context = {'form': form}
-    return render(request, 'register.html', context)
+    context_dict = {'form': form, 'categories': categories, 'random_items': random_items}
+    return render(request, 'register.html', context_dict)
 
 def subcategory_detail(request, subcategory_id):
     subcategory = get_object_or_404(Subcategory, pk=subcategory_id)
