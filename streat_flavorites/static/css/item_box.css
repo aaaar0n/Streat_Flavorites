@@ -3,6 +3,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    margin-left: 4%; /* Add the desired indentation value */
 }
 
 .item-box {
