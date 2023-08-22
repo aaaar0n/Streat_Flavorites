@@ -37,7 +37,7 @@
                         <button id="like-button" data-item-id="{{ item.id }}" class="like-button">Like</button>
                         <p>Likes: <span id="like-count">{{ item.likes }}</span></p>
                     </div>
-                {% elif %}
+                {% else %}
                     <p class="item-price" style="color: red;">You need to register and login first to be able to use the add to cart function</p>
                 {% endif %}
                     <br>
